@@ -6,6 +6,19 @@
     <title>郑州·大上海城二次元交流群 - 官网</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        // 检测是否为移动设备
+        function isMobileDevice() {
+            return (typeof window.orientation !== "undefined") || 
+                (navigator.userAgent.indexOf('IEMobile') !== -1) ||
+                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // 如果是移动设备且当前不是移动版页面，则跳转
+        if (isMobileDevice() && !window.location.href.includes('mobile')) {
+            window.location.href = 'index_mobile.html';
+        }
+    </script>
     <style>
         * {
             margin: 0;
@@ -1052,7 +1065,7 @@
                         <h3>cn渚山河</h3>
                         <div class="role">高级管理员</div>
                         <p>社群的一位很温柔的老师</p>
-                        <p>Asuka激推，是位很好交流的老师哦~</p>
+                        <p>明日香激推，是位很好交流的老师哦~</p>
                     </div>
                 </div>
                 <div class="member-card">
@@ -1130,17 +1143,6 @@
                 </div>
                 <div class="member-card">
                     <div class="member-header">
-                        <img src="images/懒懒.jpg" alt="管理员">
-                    </div>
-                    <div class="member-info">
-                        <h3>cn懒懒</h3>
-                        <div class="role">①群管理员</div>
-                        <p>“很外向的老师” ——子霖</p>
-                        <p>“不是很熟” ——某个0点刷新的老师</p>
-                    </div>
-                </div>
-                <div class="member-card">
-                    <div class="member-header">
                         <img src="images/琥夏.jpg" alt="管理员">
                     </div>
                     <div class="member-info">
@@ -1148,6 +1150,17 @@
                         <div class="role">①群管理员 官网管理员</div>
                         <p>是一个被流放蜀南的老师</p>
                         <p>内向到没有跟任何人在线下见过面</p>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-header">
+                        <img src="images/懒懒.jpg" alt="管理员">
+                    </div>
+                    <div class="member-info">
+                        <h3>cn懒懒</h3>
+                        <div class="role">①群管理员</div>
+                        <p>“很外向的老师” ——子霖</p>
+                        <p>“不是很熟” ——晚安</p>
                     </div>
                 </div>
                 <div class="member-card">
@@ -1188,9 +1201,10 @@
                         <img src="images/zone.jpg" alt="管理员">
                     </div>
                     <div class="member-info">
-                        <h3>______</h3>
+                        <h3>cn萧萧</h3>
                         <div class="role">②群管理员</div>
-                        <p>“这位老师很神秘的样子” ——琥夏</p>
+                        <p>是一位有耐心、非常美丽温柔的老师</p>
+                        <p>——林六元</p>
                     </div>
                 </div>
             </div>
@@ -1226,9 +1240,9 @@
                 <div class="news-card">
                     <div class="news-date">2025年8月18日</div>
                     <div class="news-content">
-                        <h3>官网发布？</h3>
+                        <h3>官网发布</h3>
                         <h4>发布：琥夏</h4>
-                        <p>内容？</p>
+                        <p>一转眼，郑州·大上海城二次元交流群的一周年庆（7月底）竟然已经过去一个月啦！ 虽然这份周年礼物有点“拖更”，但管理团队精心准备的惊喜终于来啦——我们的官方网站正式上线了！衷心感谢各位老师这一年多来不离不弃的陪伴与支持！ 这份迟到的礼物，承载着我们满满的谢意，希望老师们喜欢！</p>
                     </div>
                 </div>
             </div>
