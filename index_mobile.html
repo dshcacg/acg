@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>郑州·大上海城二次元交流群 - 移动版</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #39c5bb;
+            --secondary: #252593;
+            --dark: #12121e;
+            --light: #f8f9fa;
+            --accent: #e83e8c;
+            --accent-light: #ff6ec7;
+            --text: #e0e0ff;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #0d0d15 0%, var(--secondary) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+        
+        /* 移动端导航样式 */
+        .mobile-header {
+            background: rgba(18, 18, 30, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(57, 197, 187, 0.2);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mobile-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .mobile-logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), #2de2d1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(57, 197, 187, 0.4);
+            background: url('images/logo.jpg') center/cover no-repeat;
+        }
+        
+        .mobile-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), #7cfef2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 8px rgba(57, 197, 187, 0.3);
+        }
+        
+        .mobile-menu-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 280px;
+            height: 100vh;
+            background: rgba(18, 18, 30, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 1100;
+            transition: all 0.4s ease;
+            padding: 80px 20px 20px;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.4);
+            overflow-y: auto;
+        }
+        
+        .mobile-nav.active {
+            right: 0;
+        }
+        
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .mobile-nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background: rgba(57, 197, 187, 0.1);
+            border-radius: 10px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .mobile-nav-links a.active,
+        .mobile-nav-links a:hover {
+            background: rgba(57, 197, 187, 0.25);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--accent);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1050;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s;
+        }
+        
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Hero 区域 - 移动版 */
+        .mobile-hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mobile-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(57, 197, 187, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(232, 62, 140, 0.1) 0%, transparent 40%);
+            z-index: -1;
+        }
+        
+        .mobile-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), #7cfef2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(57, 197, 187, 0.3);
+        }
+        
+        .mobile-hero p {
+            font-size: 1.2rem;
+            max-width: 100%;
+            margin-bottom: 30px;
+            color: #c0c0ff;
+        }
+        
+        .mobile-cta-button {
+            display: inline-block;
+            padding: 14px 35px;
+            background: linear-gradient(45deg, var(--primary), #2de2d1);
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(57, 197, 187, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .mobile-cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .mobile-cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .mobile-cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(57, 197, 187, 0.6), 0 0 12px rgba(232, 62, 140, 0.4);
+        }
+        
+        /* 分区样式 - 移动版 */
+        .mobile-section {
+            padding: 60px 20px;
+            position: relative;
+        }
+        
+        .mobile-section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .mobile-section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        /* 内容卡片样式 */
+        .mobile-card {
+            background: rgba(30, 30, 46, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(57, 197, 187, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mobile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        /* 社群介绍 - 移动版 */
+        .mobile-about-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .mobile-about-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .mobile-about-text p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: #d0d0ff;
+        }
+        
+        .mobile-miku-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .mobile-miku-image img {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(57, 197, 187, 0.3);
+        }
+        
+        .mobile-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .mobile-stat-card {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            background: rgba(57, 197, 187, 0.1);
+            border-radius: 10px;
+        }
+        
+        .mobile-stat-card i {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        /* 加入方式 - 移动版 */
+        .mobile-join-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .mobile-method-card {
+            padding: 20px; /* 减小内边距 */
+            text-align: center;
+            border-radius: 15px;
+            font-size: 0.95rem; /* 减小字体大小 */
+        }
+        
+        .mobile-method-icon {
+            font-size: 40px; /* 减小图标大小 */
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+        
+        .mobile-method-card h3 {
+            font-size: 1.2rem; /* 减小标题大小 */
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .mobile-method-card p {
+            color: #c0c0ff;
+            font-size: 0.9rem; /* 减小段落字体大小 */
+            margin: 5px 0; /* 调整段落间距 */
+        }
+        
+        /* 规则公告 - 移动版 */
+        .mobile-rules-list {
+            list-style-type: none;
+        }
+        
+        .mobile-rules-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(57, 197, 187, 0.1);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .mobile-rules-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-rule-number {
+            background: var(--primary);
+            color: var(--dark);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+        
+        /* 管理团队 - 移动版 */
+        .mobile-team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .mobile-member-card {
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(30, 30, 46, 0.6);
+            border: 1px solid rgba(57, 197, 187, 0.2);
+        }
+        
+        .mobile-member-header {
+            height: 140px;
+            position: relative;
+        }
+        
+        .mobile-member-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .mobile-member-info {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .mobile-member-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .mobile-member-info .role {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        
+        .mobile-member-info p {
+            font-size: 0.8rem;
+            color: #c0c0ff;
+        }
+        
+        /* 动态资讯 - 移动版 */
+        .mobile-news-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .mobile-news-card {
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(30, 30, 46, 0.6);
+            border: 1px solid rgba(57, 197, 187, 0.2);
+        }
+        
+        .mobile-news-date {
+            padding: 10px 15px;
+            background: rgba(232, 62, 140, 0.2);
+            font-size: 0.85rem;
+            color: var(--accent-light);
+        }
+        
+        .mobile-news-content {
+            padding: 15px;
+        }
+        
+        .mobile-news-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        
+        .mobile-news-content h4 {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: var(--accent-light);
+        }
+        
+        .mobile-news-content p {
+            font-size: 0.95rem;
+            color: #c0c0ff;
+        }
+        
+        /* 活动日历 - 移动版 */
+        .mobile-calendar-container {
+            background: rgba(30, 30, 46, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(57, 197, 187, 0.2);
+        }
+        
+        .mobile-calendar-header {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .mobile-calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px; /* 减小间距 */
+        }
+        
+        .mobile-calendar-day {
+            text-align: center;
+            padding: 8px 0;
+            font-weight: bold;
+            font-size: 0.85rem; /* 减小字体大小 */
+            color: var(--accent);
+        }
+        
+        .mobile-calendar-cell {
+            height: 65px; /* 增加高度 */
+            background: rgba(40, 40, 60, 0.5);
+            border-radius: 8px;
+            padding: 5px;
+            position: relative;
+            border: 1px solid rgba(57, 197, 187, 0.1);
+            font-size: 0.85rem; /* 减小字体大小 */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            overflow: hidden; /* 防止内容溢出 */
+        }
+        
+        .mobile-calendar-cell.event {
+            background: rgba(232, 62, 140, 0.15);
+            border: 1px solid rgba(232, 62, 140, 0.3);
+        }
+        
+        .mobile-event-date {
+            font-size: 0.7rem; /* 减小字体大小 */
+            color: var(--primary);
+            font-weight: bold;
+            margin-top: 2px;
+        }
+        
+        .mobile-event-title {
+            font-size: 0.6rem; /* 减小字体大小 */
+            margin-top: 2px;
+            color: var(--accent-light);
+            text-align: center;
+            line-height: 1.2;
+            word-break: break-all; /* 允许单词内换行 */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* 限制为两行 */
+            -webkit-box-orient: vertical;
+        }
+        
+        /* 页脚 - 移动版 */
+        .mobile-footer {
+            background: rgba(10, 10, 20, 0.95);
+            padding: 40px 20px 25px; /* 减小内边距 */
+            margin-top: 60px;
+            border-top: 1px solid rgba(57, 197, 187, 0.2);
+            font-size: 0.95rem; /* 减小字体大小 */
+        }
+        
+        .mobile-footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px; /* 减小间距 */
+        }
+        
+        .mobile-footer-section h3 {
+            font-size: 1.15rem; /* 减小标题大小 */
+            margin-bottom: 12px;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .mobile-footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 30px; /* 减小下划线长度 */
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .mobile-footer-section p {
+            font-size: 0.9rem; /* 减小段落字体大小 */
+        }
+        
+        .mobile-footer-links {
+            list-style-type: none;
+        }
+        
+        .mobile-footer-links li {
+            margin-bottom: 6px; /* 减小间距 */
+        }
+        
+        .mobile-footer-links a {
+            color: #c0c0ff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem; /* 减小字体大小 */
+        }
+        
+        .mobile-footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .mobile-social-links {
+            display: flex;
+            gap: 10px; /* 减小间距 */
+            margin-top: 12px;
+        }
+        
+        .mobile-social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px; /* 减小图标大小 */
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(57, 197, 187, 0.1);
+            color: var(--primary);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(57, 197, 187, 0.3);
+            font-size: 0.9rem; /* 减小图标大小 */
+        }
+        
+        .mobile-social-links a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .mobile-copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(57, 197, 187, 0.1);
+            color: #aaa;
+            font-size: 0.8rem; /* 减小字体大小 */
+        }
+        
+        /* 返回顶部按钮 */
+        .mobile-back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(57, 197, 187, 0.4);
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 响应式调整 */
+        @media (min-width: 768px) {
+            .mobile-hero h1 {
+                font-size: 3rem;
+            }
+            
+            .mobile-team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            
+            .mobile-calendar-cell {
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 移动端头部导航 -->
+    <header class="mobile-header">
+        <div class="mobile-logo">
+            <div class="mobile-logo-img"></div>
+            <div class="mobile-logo-text">郑州·大上海城二次元交流群</div>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- 移动端导航菜单 -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="mobile-nav-links">
+            <a href="#about" class="active">
+                <i class="fas fa-users"></i> 社群介绍
+            </a>
+            <a href="#join">
+                <i class="fas fa-sign-in-alt"></i> 加入方式
+            </a>
+            <a href="#rules">
+                <i class="fas fa-list-alt"></i> 规则公告
+            </a>
+            <a href="#team">
+                <i class="fas fa-user-shield"></i> 管理团队
+            </a>
+            <a href="#news">
+                <i class="fas fa-newspaper"></i> 动态资讯
+            </a>
+            <a href="#events">
+                <i class="fas fa-calendar-alt"></i> 活动日历
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero 区域 - 移动版 -->
+    <section class="mobile-hero">
+        <h1>郑州·大上海城二次元交流群</h1>
+        <p>连接同好 · 分享热爱 · 共创精彩二次元生活</p>
+        <a href="#join" class="mobile-cta-button">立即加入我们</a>
+    </section>
+
+    <!-- 社群介绍 - 移动版 -->
+    <section id="about" class="mobile-section">
+        <div class="container">
+            <h2 class="mobile-section-title">社群介绍</h2>
+            <div class="mobile-about-content">
+                <div class="mobile-about-text">
+                    <h3>关于社群</h3>
+                    <p>郑州大上海城二次元交流群是一个以初音未来为群形象的综合性二次元社群。我们致力于为郑州及周边地区的二次元爱好者提供一个交流、分享、学习的平台。</p>
+                    <p>在这里，你可以找到志同道合的朋友，一起参加漫展、线下聚会，交流动漫、游戏、cosplay等二次元文化，分享创作灵感，共同成长。</p>
+                    <p>无论你是动漫迷、游戏玩家、coser、画师还是单纯聊天，这里都欢迎你的加入！</p>
+                    
+                    <div class="mobile-stats">
+                        <div class="mobile-stat-card">
+                            <i class="fas fa-users"></i>
+                            <h3>800+</h3>
+                            <p>活跃成员</p>
+                        </div>
+                        <div class="mobile-stat-card">
+                            <i class="fas fa-heart"></i>
+                            <h3>1年</h3>
+                            <p>社群历史</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mobile-miku-image">
+                    <img src="images/miku.jpg" alt="初音未来 Miku">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 加入方式 - 移动版 -->
+    <section id="join" class="mobile-section">
+        <div class="container">
+            <h2 class="mobile-section-title">加入方式</h2>
+            <div class="mobile-join-methods">
+                <div class="mobile-card mobile-method-card">
+                    <div class="mobile-method-icon">
+                        <i class="fab fa-qq"></i>
+                    </div>
+                    <h3>QQ群加入</h3>
+                    <p>1群：976753783</p>
+                    <p>2群：1003941132</p>
+                    <p>搜索群号申请加入，快速审核加入</p>
+                </div>
+                <div class="mobile-card mobile-method-card">
+                    <div class="mobile-method-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>线下加入？</h3>
+                    <p>在郑州大上海城寻找野生的二维码加入</p>
+                    <p>不要扫！可能是诈骗！！！</p>
+                </div>
+                <div class="mobile-card mobile-method-card">
+                    <div class="mobile-method-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3>成员邀请</h3>
+                    <p>通过现有社群成员邀请加入</p>
+                    <p>无需回答问题直接审核加入</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 规则公告 - 移动版 -->
+    <section id="rules" class="mobile-section">
+        <div class="container">
+            <h2 class="mobile-section-title">规则公告</h2>
+            <div class="mobile-card">
+                <ul class="mobile-rules-list">
+                    <li>
+                        <div class="mobile-rule-number">1</div>
+                        <div class="rule-text">请勿在群里发布任何不良信息，包括但不限于色情、暴力、恐怖、诈骗等内容</div>
+                    </li>
+                    <li>
+                        <div class="mobile-rule-number">2</div>
+                        <div class="rule-text">请勿在群里传播谣言、虚假信息、恶意攻击他人等负面信息，我们要保持理性、客观、善良的态度</div>
+                    </li>
+                    <li>
+                        <div class="mobile-rule-number">3</div>
+                        <div class="rule-text">请尊重他人的意见和言论，不要进行人身攻击、辱骂等不文明行为，我们要建立和谐、友爱的群体关系</div>
+                    </li>
+                    <li>
+                        <div class="mobile-rule-number">4</div>
+                        <div class="rule-text">请勿在群里发布与二次元无关的广告、推销信息等，我们要保持群内信息的纯净和有序</div>
+                    </li>
+                    <li>
+                        <div class="mobile-rule-number">5</div>
+                        <div class="rule-text">请大家仔细辨别群里的广告，避免造成财产的损失，如遇骗子请向群主或管理举报</div>
+                    </li>
+                    <li>
+                        <div class="mobile-rule-number">6</div>
+                        <div class="rule-text">每个工作日的9点-11点和18点-23点为广告时间，周末不作限制，其余时侯广告可以上传到群相册</div>
+                    </li>
+                    <li>
+                        <div class="mobile-rule-number">7</div>
+                        <div class="rule-text">如果您长时间未曾冒泡，也为了避免过多消息打扰到您，我们会把您轻轻地抱出群</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 管理团队 - 移动版 -->
+    <section id="team" class="mobile-section">
+        <div class="container">
+            <h2 class="mobile-section-title">管理团队</h2>
+            <div class="mobile-team-grid">
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/林六元.jpg" alt="群主">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>林六元</h3>
+                        <div class="role">群主</div>
+                        <p>拥有三年的社群管理经验</p>
+                        <p>在这里，他拥有着至高无上的权威</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/六元钱.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>六元钱</h3>
+                        <div class="role">高级管理员</div>
+                        <p>群主对象</p>
+                        <p>真·至高无上の权威</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/渚山河.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>渚山河</h3>
+                        <div class="role">高级管理员</div>
+                        <p>社群的一位很温柔的老师</p>
+                        <p>明日香激推，是位很好交流的老师哦~</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/晚安.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>晚安</h3>
+                        <div class="role">高级管理员</div>
+                        <p>晚安姐姐是一位非常kawaii的老师</p>
+                        <p>是社群不可缺失的一部分呢~</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/时节.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>时节</h3>
+                        <div class="role">高级管理员</div>
+                        <p>阳光开朗大男孩~</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/子霖.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>子霖</h3>
+                        <div class="role">高级管理员</div>
+                        <p>内向腼腆小男孩~</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/欣梦.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>欣梦</h3>
+                        <div class="role">高级管理员</div>
+                        <p>人民的管理员，人不狠话多</p>
+                        <p>(确信)</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/烤冷面.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>烤冷面</h3>
+                        <div class="role">高级管理员</div>
+                        <p>一位芝士火鸡烤冷面梦女</p>
+                        <p>“还有我想吃烤冷面了”</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/Hana.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>Hana</h3>
+                        <div class="role">高级管理员</div>
+                        <p>“传说这位老师是一个人形地图会摇着花手带你满城跑”</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/十一.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>十一</h3>
+                        <div class="role">高级管理员</div>
+                        <p>早上好、中午好 以及 晚上好</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/琥夏.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>琥夏</h3>
+                        <div class="role">①群管理员 官网管理员</div>
+                        <p>是一个被流放蜀南的老师</p>
+                        <p>内向到没有跟任何人在线下见过面</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/懒懒.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>懒懒</h3>
+                        <div class="role">①群管理员</div>
+                        <p>“很外向的老师” ——子霖</p>
+                        <p>“不是很熟” ——某个0点刷新的老师</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/浮月.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>浮月</h3>
+                        <div class="role">②群管理员</div>
+                        <p>是一位外向的老师</p>
+                        <p>②群聊天的话找他准没错</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/Kitiy猫.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>Kitiy猫</h3>
+                        <div class="role">②群管理员</div>
+                        <p>这位老师虽然在社群里比较内向</p>
+                        <p>实则频繁刷新在大上海城~</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/世界是圆的.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>世界是圆的</h3>
+                        <div class="role">②群管理员</div>
+                        <p>这位老师感觉很内向的样子</p>
+                        <p>实则是一位很温柔的老师哦</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/zone.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>萧萧</h3>
+                        <div class="role">②群管理员</div>
+                        <p>是一位有耐心、非常美丽温柔的老师</p>
+                        <p>——林六元</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 动态资讯 - 移动版 -->
+    <section id="news" class="mobile-section">
+        <div class="container">
+            <h2 class="mobile-section-title">动态资讯</h2>
+            <div class="mobile-news-grid">
+                <div class="mobile-news-card">
+                    <div class="mobile-news-date">2024年12月26日</div>
+                    <div class="mobile-news-content">
+                        <h3>安慕希&大上海城 元旦跨次元狂欢夜</h3>
+                        <h4>发布：林六元</h4>
+                        <p>活动地点：郑州大上海城一楼随舞大厅，暖气全开！</p>
+                        <p>活动时间：12.31号18.00-次日1.00（跨年不关门）</p>
+                        <p>1.1号：14.00-21.30</p>
+                        <p>更有本地知名Coser与你一起跨年，百人COS游场团招募开启！</p>
+                    </div>
+                </div>
+                <div class="mobile-news-card">
+                    <div class="mobile-news-date">2025年1月28日</div>
+                    <div class="mobile-news-content">
+                        <h3>新年祝福</h3>
+                        <h4>发布：渚山河</h4>
+                        <p>在此我代表所有管理给各位发表新年祝福:新年新气象，祝各位老师新年行大运！愿你们在蛇年里拥有如大海般浩瀚的胸怀，汇聚磅礴的勇气，无论面对何种困难，都能迎难而上，一往无前，开启人生新篇章！</p>
+                    </div>
+                </div>
+                <div class="mobile-news-card">
+                    <div class="mobile-news-date">2025年8月18日</div>
+                    <div class="mobile-news-content">
+                        <h3>官网发布</h3>
+                        <h4>发布：琥夏</h4>
+                        <p>一转眼，郑州·大上海城二次元交流群的一周年庆（7月底）竟然已经过去一个月啦！虽然这份周年礼物有点"拖更"，但管理团队精心准备的惊喜终于来啦——我们的官方网站正式上线了！衷心感谢各位老师这一年多来不离不弃的陪伴与支持！这份迟到的礼物，承载着我们满满的谢意，希望老师们喜欢！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 活动日历 - 移动版 -->
+    <section id="events" class="mobile-section">
+        <div class="container">
+            <h2 class="mobile-section-title">活动日历</h2>
+            <div class="mobile-card mobile-calendar-container">
+                <div class="mobile-calendar-header">
+                    <h3>本月活动(仅显示大型漫展、大上海城活动)</h3>
+                    <h4>2025年8月</h4>
+                </div>
+                <div class="mobile-calendar-grid">
+                    <div class="mobile-calendar-day">日</div>
+                    <div class="mobile-calendar-day">一</div>
+                    <div class="mobile-calendar-day">二</div>
+                    <div class="mobile-calendar-day">三</div>
+                    <div class="mobile-calendar-day">四</div>
+                    <div class="mobile-calendar-day">五</div>
+                    <div class="mobile-calendar-day">六</div>
+                    
+                    <!-- 日历占位 -->
+                    <div class="mobile-calendar-cell"></div>
+                    <div class="mobile-calendar-cell"></div>
+                    <div class="mobile-calendar-cell"></div>
+                    <div class="mobile-calendar-cell"></div>
+                    <div class="mobile-calendar-cell"></div>
+                    <div class="mobile-calendar-cell event">1
+                        <div class="mobile-event-date">8.1</div>
+                        <div class="mobile-event-title">郑州青漫</div>
+                    </div>
+                    <div class="mobile-calendar-cell event">2
+                        <div class="mobile-event-date">8.2</div>
+                        <div class="mobile-event-title">郑州青漫</div>
+                    </div>
+                    
+                    <div class="mobile-calendar-cell event">3
+                        <div class="mobile-event-date">8.3</div>
+                        <div class="mobile-event-title">郑州青漫</div>
+                    </div>
+                    <div class="mobile-calendar-cell">4</div>
+                    <div class="mobile-calendar-cell">5</div>
+                    <div class="mobile-calendar-cell">6</div>
+                    <div class="mobile-calendar-cell">7</div>
+                    <div class="mobile-calendar-cell">8</div>
+                    <div class="mobile-calendar-cell">9</div>
+                    
+                    <div class="mobile-calendar-cell">10</div>
+                    <div class="mobile-calendar-cell">11</div>
+                    <div class="mobile-calendar-cell">12</div>
+                    <div class="mobile-calendar-cell">13</div>
+                    <div class="mobile-calendar-cell">14</div>
+                    <div class="mobile-calendar-cell">15</div>
+                    <div class="mobile-calendar-cell event">16
+                        <div class="mobile-event-date">8.16</div>
+                        <div class="mobile-event-title">新世界</div>
+                    </div>
+                    
+                    <div class="mobile-calendar-cell event">17
+                        <div class="mobile-event-date">8.17</div>
+                        <div class="mobile-event-title">新世界</div>
+                    </div>
+                    <div class="mobile-calendar-cell">18</div>
+                    <div class="mobile-calendar-cell">19</div>
+                    <div class="mobile-calendar-cell">20</div>
+                    <div class="mobile-calendar-cell">21</div>
+                    <div class="mobile-calendar-cell">22</div>
+                    <div class="mobile-calendar-cell">23</div>
+                    
+                    <div class="mobile-calendar-cell">24</div>
+                    <div class="mobile-calendar-cell">25</div>
+                    <div class="mobile-calendar-cell">26</div>
+                    <div class="mobile-calendar-cell">27</div>
+                    <div class="mobile-calendar-cell">28</div>
+                    <div class="mobile-calendar-cell">29</div>
+                    <div class="mobile-calendar-cell">30</div>
+
+                    <div class="mobile-calendar-cell">31</div>
+                    <div class="mobile-calendar-cell"></div>
+                    <div class="mobile-calendar-cell"></div>
+                    <div class="mobile-calendar-cell"></div>
+                    <div class="mobile-calendar-cell"></div>
+                    <div class="mobile-calendar-cell"></div>
+                    <div class="mobile-calendar-cell"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 - 移动版 -->
+    <footer class="mobile-footer">
+        <div class="container">
+            <div class="mobile-footer-content">
+                <div class="mobile-footer-section">
+                    <h3>关于我们</h3>
+                    <p>郑州大上海城二次元交流群成立于2024年，是以初音未来为群形象的综合性二次元社群，致力于为郑州及周边地区二次元爱好者提供交流平台。</p>
+                    <div class="mobile-social-links">
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-bilibili"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.85rem;">ps:其实上面四个跳转是摆设喵~</p>
+                </div>
+                <div class="mobile-footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="mobile-footer-links">
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> 社群介绍</a></li>
+                        <li><a href="#join"><i class="fas fa-chevron-right"></i> 加入方式</a></li>
+                        <li><a href="#rules"><i class="fas fa-chevron-right"></i> 群规公告</a></li>
+                        <li><a href="#news"><i class="fas fa-chevron-right"></i> 最新动态</a></li>
+                        <li><a href="#events"><i class="fas fa-chevron-right"></i> 活动日历</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-footer-section">
+                    <h3>联系方式</h3>
+                    <ul class="mobile-footer-links">
+                        <li><a href="https://mail.qq.com/"><i class="fas fa-envelope"></i> sakurajima.roka@gmail.com</a></li>
+                        <li><a href="https://im.qq.com/"><i class="fab fa-qq"></i> ①群：976753783</a></li>
+                        <li><a href="https://im.qq.com/"><i class="fab fa-qq"></i> ②群：1003941132</a></li>
+                        <li><a href="http://www.dshc.cn/"><i class="fas fa-map-marker-alt"></i> 郑州大上海城</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mobile-copyright">
+                &copy; 2025 郑州大上海城二次元交流群
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <div class="mobile-back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 移动端导航菜单功能
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+        const navLinks = document.querySelectorAll('.mobile-nav-links a');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+            mobileOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        mobileNavClose.addEventListener('click', () => {
+            closeMobileNav();
+        });
+        
+        mobileOverlay.addEventListener('click', () => {
+            closeMobileNav();
+        });
+        
+        function closeMobileNav() {
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // 导航高亮功能
+        function setActiveLink() {
+            const sections = document.querySelectorAll('.mobile-section');
+            let currentSectionId = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                
+                if (window.scrollY >= (sectionTop - 100) && window.scrollY < (sectionTop + sectionHeight - 100)) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === currentSectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        // 初始化高亮
+        window.addEventListener('load', setActiveLink);
+        window.addEventListener('scroll', setActiveLink);
+        
+        // 平滑滚动
+        navLinks.forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                closeMobileNav();
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 返回顶部按钮
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
