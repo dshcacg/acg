@@ -497,74 +497,70 @@
             color: #c0c0ff;
         }
         
-        /* 活动日历 - 移动版 */
-        .mobile-calendar-container {
-            background: rgba(30, 30, 46, 0.6);
+        /* 资源分享 - 移动版 */
+        .mobile-resources-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .mobile-resource-card {
             border-radius: 15px;
             padding: 20px;
+            background: rgba(30, 30, 46, 0.6);
             border: 1px solid rgba(57, 197, 187, 0.2);
         }
         
-        .mobile-calendar-header {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .mobile-calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 6px; /* 减小间距 */
-        }
-        
-        .mobile-calendar-day {
-            text-align: center;
-            padding: 8px 0;
-            font-weight: bold;
-            font-size: 0.85rem; /* 减小字体大小 */
+        .mobile-resource-card h3 {
             color: var(--accent);
-        }
-        
-        .mobile-calendar-cell {
-            height: 65px; /* 增加高度 */
-            background: rgba(40, 40, 60, 0.5);
-            border-radius: 8px;
-            padding: 5px;
-            position: relative;
-            border: 1px solid rgba(57, 197, 187, 0.1);
-            font-size: 0.85rem; /* 减小字体大小 */
+            margin-bottom: 15px;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
             align-items: center;
-            overflow: hidden; /* 防止内容溢出 */
+            gap: 10px;
+            font-size: 1.2rem;
         }
         
-        .mobile-calendar-cell.event {
-            background: rgba(232, 62, 140, 0.15);
-            border: 1px solid rgba(232, 62, 140, 0.3);
+        .mobile-resource-links {
+            list-style-type: none;
         }
         
-        .mobile-event-date {
-            font-size: 0.7rem; /* 减小字体大小 */
+        .mobile-resource-links li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(57, 197, 187, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mobile-resource-links li::before {
+            content: '•';
             color: var(--primary);
-            font-weight: bold;
-            margin-top: 2px;
         }
         
-        .mobile-event-title {
-            font-size: 0.6rem; /* 减小字体大小 */
-            margin-top: 2px;
+        .mobile-resource-links li:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-resource-links a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .mobile-resource-links a:hover {
             color: var(--accent-light);
-            text-align: center;
-            line-height: 1.2;
-            word-break: break-all; /* 允许单词内换行 */
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2; /* 限制为两行 */
-            -webkit-box-orient: vertical;
+            text-decoration: underline;
+        }
+        
+        .mobile-copyright-note {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 5px;
+            font-size: 0.85rem;
+            color: #ff9999;
+            border: 1px solid rgba(255, 0, 0, 0.2);
         }
         
         /* 页脚 - 移动版 */
@@ -697,10 +693,6 @@
             .mobile-team-grid {
                 grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             }
-            
-            .mobile-calendar-cell {
-                height: 70px;
-            }
         }
     </style>
 </head>
@@ -738,8 +730,11 @@
             <a href="#news">
                 <i class="fas fa-newspaper"></i> 动态资讯
             </a>
-            <a href="#events">
-                <i class="fas fa-calendar-alt"></i> 活动日历
+            <a href="#resources">
+                <i class="fas fa-share-alt"></i> 资源分享
+            </a>
+            <a href="community.html">
+                <i class="fas fa-comments"></i> 社区
             </a>
         </div>
     </div>
@@ -792,8 +787,8 @@
                         <i class="fab fa-qq"></i>
                     </div>
                     <h3>QQ群加入</h3>
-                    <p>1群：976753783</p>
-                    <p>2群：1003941132</p>
+                    <p><a href="https://qm.qq.com/q/dZFmphFNiU">①群：976753783</a></p>
+                    <p><a href="https://qm.qq.com/q/wkC76KJxkI">②群：1003941132</a></p>
                     <p>搜索群号申请加入，快速审核加入</p>
                 </div>
                 <div class="mobile-card mobile-method-card">
@@ -865,7 +860,7 @@
                         <img src="images/林六元.jpg" alt="群主">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>林六元</h3>
+                        <h3>cn林六元</h3>
                         <div class="role">群主</div>
                         <p>拥有三年的社群管理经验</p>
                         <p>在这里，他拥有着至高无上的权威</p>
@@ -876,7 +871,7 @@
                         <img src="images/六元钱.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>六元钱</h3>
+                        <h3>cn六元钱</h3>
                         <div class="role">高级管理员</div>
                         <p>群主对象</p>
                         <p>真·至高无上の权威</p>
@@ -887,7 +882,7 @@
                         <img src="images/渚山河.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>渚山河</h3>
+                        <h3>cn渚山河</h3>
                         <div class="role">高级管理员</div>
                         <p>社群的一位很温柔的老师</p>
                         <p>明日香激推，是位很好交流的老师哦~</p>
@@ -898,7 +893,7 @@
                         <img src="images/晚安.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>晚安</h3>
+                        <h3>cn晚安</h3>
                         <div class="role">高级管理员</div>
                         <p>晚安姐姐是一位非常kawaii的老师</p>
                         <p>是社群不可缺失的一部分呢~</p>
@@ -909,7 +904,7 @@
                         <img src="images/时节.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>时节</h3>
+                        <h3>cn时节</h3>
                         <div class="role">高级管理员</div>
                         <p>阳光开朗大男孩~</p>
                     </div>
@@ -919,9 +914,10 @@
                         <img src="images/子霖.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>子霖</h3>
+                        <h3>cn子霖</h3>
                         <div class="role">高级管理员</div>
                         <p>内向腼腆小男孩~</p>
+                        <p>太子殿下最忠诚的信徒</p>
                     </div>
                 </div>
                 <div class="mobile-member-card">
@@ -929,10 +925,9 @@
                         <img src="images/欣梦.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>欣梦</h3>
+                        <h3>cn欣梦</h3>
                         <div class="role">高级管理员</div>
-                        <p>人民的管理员，人不狠话多</p>
-                        <p>(确信)</p>
+                        <p>人民的管理员，人不狠话多(确信)</p>
                     </div>
                 </div>
                 <div class="mobile-member-card">
@@ -940,10 +935,10 @@
                         <img src="images/烤冷面.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>烤冷面</h3>
+                        <h3>cn烤冷面</h3>
                         <div class="role">高级管理员</div>
                         <p>一位芝士火鸡烤冷面梦女</p>
-                        <p>“还有我想吃烤冷面了”</p>
+                        <p>"还有我想吃烤冷面了" ——琥夏</p>
                     </div>
                 </div>
                 <div class="mobile-member-card">
@@ -951,9 +946,10 @@
                         <img src="images/Hana.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>Hana</h3>
+                        <h3>cnHana</h3>
                         <div class="role">高级管理员</div>
-                        <p>“传说这位老师是一个人形地图会摇着花手带你满城跑”</p>
+                        <p>"传说这位老师是一个人形地图</p>
+                        <p>会摇着花手带你满城跑" ——琥夏</p>
                     </div>
                 </div>
                 <div class="mobile-member-card">
@@ -961,7 +957,7 @@
                         <img src="images/十一.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>十一</h3>
+                        <h3>cn十一</h3>
                         <div class="role">高级管理员</div>
                         <p>早上好、中午好 以及 晚上好</p>
                     </div>
@@ -971,10 +967,21 @@
                         <img src="images/琥夏.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>琥夏</h3>
-                        <div class="role">①群管理员 官网管理员</div>
-                        <p>是一个被流放蜀南的老师</p>
-                        <p>内向到没有跟任何人在线下见过面</p>
+                        <h3>cn琥夏</h3>
+                        <div class="role">官网管理员</div>
+                        <p>这是一位活泼的老师</p>
+                        <p>其实他的人设是高冷？</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/璃.jpg" alt="管理员">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>cn璃</h3>
+                        <div class="role">①群管理员</div>
+                        <p>璃子是香香软软小蛋糕</p>
+                        <p>脾气很好超温柔超可爱！</p>
                     </div>
                 </div>
                 <div class="mobile-member-card">
@@ -982,10 +989,10 @@
                         <img src="images/懒懒.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>懒懒</h3>
+                        <h3>cn懒懒</h3>
                         <div class="role">①群管理员</div>
-                        <p>“很外向的老师” ——子霖</p>
-                        <p>“不是很熟” ——某个0点刷新的老师</p>
+                        <p>"很外向的老师" ——子霖</p>
+                        <p>实则是有点内向哒~</p>
                     </div>
                 </div>
                 <div class="mobile-member-card">
@@ -993,7 +1000,7 @@
                         <img src="images/浮月.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>浮月</h3>
+                        <h3>cn浮月</h3>
                         <div class="role">②群管理员</div>
                         <p>是一位外向的老师</p>
                         <p>②群聊天的话找他准没错</p>
@@ -1026,7 +1033,7 @@
                         <img src="images/zone.jpg" alt="管理员">
                     </div>
                     <div class="mobile-member-info">
-                        <h3>萧萧</h3>
+                        <h3>cn萧萧</h3>
                         <div class="role">②群管理员</div>
                         <p>是一位有耐心、非常美丽温柔的老师</p>
                         <p>——林六元</p>
@@ -1044,12 +1051,14 @@
                 <div class="mobile-news-card">
                     <div class="mobile-news-date">2024年12月26日</div>
                     <div class="mobile-news-content">
-                        <h3>安慕希&大上海城 元旦跨次元狂欢夜</h3>
+                        <h3>安慕希&大上海城 元旦跨次元狂欢夜-活动终宣来啦！📢</h3>
                         <h4>发布：林六元</h4>
                         <p>活动地点：郑州大上海城一楼随舞大厅，暖气全开！</p>
-                        <p>活动时间：12.31号18.00-次日1.00（跨年不关门）</p>
-                        <p>1.1号：14.00-21.30</p>
-                        <p>更有本地知名Coser与你一起跨年，百人COS游场团招募开启！</p>
+                        <p>活动时间12.31号18.00-次日1.00（跨年不关门哦！）</p>
+                        <p>       1.1号：14.00-21.30</p>
+                        <p>更有本地知名Coser与你一起跨年</p>
+                        <p>百人COS游场团招募开启！</p>
+                        <p>伊利安慕希现场送好礼。</p>
                     </div>
                 </div>
                 <div class="mobile-news-card">
@@ -1065,94 +1074,63 @@
                     <div class="mobile-news-content">
                         <h3>官网发布</h3>
                         <h4>发布：琥夏</h4>
-                        <p>一转眼，郑州·大上海城二次元交流群的一周年庆（7月底）竟然已经过去一个月啦！虽然这份周年礼物有点"拖更"，但管理团队精心准备的惊喜终于来啦——我们的官方网站正式上线了！衷心感谢各位老师这一年多来不离不弃的陪伴与支持！这份迟到的礼物，承载着我们满满的谢意，希望老师们喜欢！</p>
+                        <p>一转眼，郑州·大上海城二次元交流群的一周年庆（7月底）竟然已经过去一个月啦！ 虽然这份周年礼物有点"拖更"，但管理团队精心准备的惊喜终于来啦——我们的官方网站正式上线了！衷心感谢各位老师这一年多来不离不弃的陪伴与支持！ 这份迟到的礼物，承载着我们满满的谢意，希望老师们喜欢！</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 活动日历 - 移动版 -->
-    <section id="events" class="mobile-section">
+    <!-- 资源分享 - 移动版 -->
+    <section id="resources" class="mobile-section">
         <div class="container">
-            <h2 class="mobile-section-title">活动日历</h2>
-            <div class="mobile-card mobile-calendar-container">
-                <div class="mobile-calendar-header">
-                    <h3>本月活动(仅显示大型漫展、大上海城活动)</h3>
-                    <h4>2025年8月</h4>
+            <h2 class="mobile-section-title">资源分享</h2>
+            <h4>樱岛琥夏提醒您：资源分享功能测试中，并非最终效果</h4>
+            <div class="mobile-resources-grid">
+                <div class="mobile-resource-card">
+                    <h3><i class="fas fa-paint-brush"></i> 画师资源</h3>
+                    <ul class="mobile-resource-links">
+                        <li><a href="#">水印包自取下载</a></li>
+                        <li><a href="#">人体结构参考图集</a></li>
+                        <li><a href="#">色彩搭配指南</a></li>
+                        <li><a href="#">线稿练习素材包</a></li>
+                    </ul>
+                    <p>社区功能施工中ing...</p>
+                    <p>本区块内容暂未开放敬请期待</p>
                 </div>
-                <div class="mobile-calendar-grid">
-                    <div class="mobile-calendar-day">日</div>
-                    <div class="mobile-calendar-day">一</div>
-                    <div class="mobile-calendar-day">二</div>
-                    <div class="mobile-calendar-day">三</div>
-                    <div class="mobile-calendar-day">四</div>
-                    <div class="mobile-calendar-day">五</div>
-                    <div class="mobile-calendar-day">六</div>
-                    
-                    <!-- 日历占位 -->
-                    <div class="mobile-calendar-cell"></div>
-                    <div class="mobile-calendar-cell"></div>
-                    <div class="mobile-calendar-cell"></div>
-                    <div class="mobile-calendar-cell"></div>
-                    <div class="mobile-calendar-cell"></div>
-                    <div class="mobile-calendar-cell event">1
-                        <div class="mobile-event-date">8.1</div>
-                        <div class="mobile-event-title">郑州青漫</div>
+                <div class="mobile-resource-card">
+                    <h3><i class="fas fa-camera"></i> Cosplay资源</h3>
+                    <ul class="mobile-resource-links">
+                        <li><a href="#">化妆教程合集</a></li>
+                        <li><a href="#">道具制作指南</a></li>
+                        <li><a href="#">假发造型技巧</a></li>
+                        <li><a href="#">郑州地区摄影场地推荐</a></li>
+                    </ul>
+                    <p>社区功能施工中ing...</p>
+                    <p>本区块内容暂未开放敬请期待</p>
+                </div>
+                <div class="mobile-resource-card">
+                    <h3><i class="fas fa-film"></i> 动漫专栏</h3>
+                    <ul class="mobile-resource-links">
+                        <li><a href="#">[置顶]活动预留窗口</a></li>
+                        <li><a href="#">经典番剧补完计划</a></li>
+                        <li><a href="#">冷门佳作推荐</a></li>
+                        <li><a href="#">国创动画盘点</a></li>
+                    </ul>
+                    <p>社区功能施工中ing...</p>
+                    <p>本区块内容暂未开放敬请期待</p>
+                </div>
+                <div class="mobile-resource-card">
+                    <h3><i class="fas fa-download"></i> 实用工具</h3>
+                    <ul class="mobile-resource-links">
+                        <li><a href="https://www.adobe.com/cn/wam/aeft.html">视频剪辑软件推荐</a></li>
+                        <li><a href="https://haowallpaper.com">动漫壁纸无损下载</a></li>
+                        <li><a href="downloads/vpn.apk">手机VPN工具</a></li>
+                        <li><a href="https://qm.qq.com/q/JoJwAgZcUE">广告位招租</a></li>
+                    </ul>
+                    <div class="mobile-copyright-note">
+                        注：本站分享资源均来自网络，仅供学习交流使用，请在下载后24小时内删除
                     </div>
-                    <div class="mobile-calendar-cell event">2
-                        <div class="mobile-event-date">8.2</div>
-                        <div class="mobile-event-title">郑州青漫</div>
-                    </div>
-                    
-                    <div class="mobile-calendar-cell event">3
-                        <div class="mobile-event-date">8.3</div>
-                        <div class="mobile-event-title">郑州青漫</div>
-                    </div>
-                    <div class="mobile-calendar-cell">4</div>
-                    <div class="mobile-calendar-cell">5</div>
-                    <div class="mobile-calendar-cell">6</div>
-                    <div class="mobile-calendar-cell">7</div>
-                    <div class="mobile-calendar-cell">8</div>
-                    <div class="mobile-calendar-cell">9</div>
-                    
-                    <div class="mobile-calendar-cell">10</div>
-                    <div class="mobile-calendar-cell">11</div>
-                    <div class="mobile-calendar-cell">12</div>
-                    <div class="mobile-calendar-cell">13</div>
-                    <div class="mobile-calendar-cell">14</div>
-                    <div class="mobile-calendar-cell">15</div>
-                    <div class="mobile-calendar-cell event">16
-                        <div class="mobile-event-date">8.16</div>
-                        <div class="mobile-event-title">新世界</div>
-                    </div>
-                    
-                    <div class="mobile-calendar-cell event">17
-                        <div class="mobile-event-date">8.17</div>
-                        <div class="mobile-event-title">新世界</div>
-                    </div>
-                    <div class="mobile-calendar-cell">18</div>
-                    <div class="mobile-calendar-cell">19</div>
-                    <div class="mobile-calendar-cell">20</div>
-                    <div class="mobile-calendar-cell">21</div>
-                    <div class="mobile-calendar-cell">22</div>
-                    <div class="mobile-calendar-cell">23</div>
-                    
-                    <div class="mobile-calendar-cell">24</div>
-                    <div class="mobile-calendar-cell">25</div>
-                    <div class="mobile-calendar-cell">26</div>
-                    <div class="mobile-calendar-cell">27</div>
-                    <div class="mobile-calendar-cell">28</div>
-                    <div class="mobile-calendar-cell">29</div>
-                    <div class="mobile-calendar-cell">30</div>
-
-                    <div class="mobile-calendar-cell">31</div>
-                    <div class="mobile-calendar-cell"></div>
-                    <div class="mobile-calendar-cell"></div>
-                    <div class="mobile-calendar-cell"></div>
-                    <div class="mobile-calendar-cell"></div>
-                    <div class="mobile-calendar-cell"></div>
-                    <div class="mobile-calendar-cell"></div>
                 </div>
             </div>
         </div>
@@ -1176,23 +1154,24 @@
                 <div class="mobile-footer-section">
                     <h3>快速链接</h3>
                     <ul class="mobile-footer-links">
+                        <li><a href="community.html"><i class="fas fa-chevron-right"></i> 社区</a></li>
                         <li><a href="#about"><i class="fas fa-chevron-right"></i> 社群介绍</a></li>
                         <li><a href="#join"><i class="fas fa-chevron-right"></i> 加入方式</a></li>
                         <li><a href="#rules"><i class="fas fa-chevron-right"></i> 群规公告</a></li>
                         <li><a href="#news"><i class="fas fa-chevron-right"></i> 最新动态</a></li>
-                        <li><a href="#events"><i class="fas fa-chevron-right"></i> 活动日历</a></li>
                     </ul>
                 </div>
                 <div class="mobile-footer-section">
                     <h3>联系方式</h3>
                     <ul class="mobile-footer-links">
                         <li><a href="https://mail.qq.com/"><i class="fas fa-envelope"></i> sakurajima.roka@gmail.com</a></li>
-                        <li><a href="https://im.qq.com/"><i class="fab fa-qq"></i> ①群：976753783</a></li>
-                        <li><a href="https://im.qq.com/"><i class="fab fa-qq"></i> ②群：1003941132</a></li>
+                        <li><a href="https://qm.qq.com/q/dZFmphFNiU"><i class="fab fa-qq"></i> ①群：976753783</a></li>
+                        <li><a href="https://qm.qq.com/q/wkC76KJxkI"><i class="fab fa-qq"></i> ②群：1003941132</a></li>
                         <li><a href="http://www.dshc.cn/"><i class="fas fa-map-marker-alt"></i> 郑州大上海城</a></li>
                     </ul>
                 </div>
             </div>
+            <div class="mobile-copyright">ver1.1 2025.8.20 | 樱岛琥夏 制作</div>
             <div class="mobile-copyright">
                 &copy; 2025 郑州大上海城二次元交流群
             </div>
@@ -1248,7 +1227,8 @@
             
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href').substring(1) === currentSectionId) {
+                if (link.getAttribute('href').startsWith('#') && 
+                    link.getAttribute('href').substring(1) === currentSectionId) {
                     link.classList.add('active');
                 }
             });
@@ -1261,16 +1241,18 @@
         // 平滑滚动
         navLinks.forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                closeMobileNav();
-                
-                window.scrollTo({
-                    top: targetElement.offsetTop - 70,
-                    behavior: 'smooth'
-                });
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    closeMobileNav();
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
         
