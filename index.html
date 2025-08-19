@@ -404,75 +404,116 @@
         /* 管理团队 */
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            grid-template-columns: repeat(6, 1fr); /* 每行6个卡片 */
+            gap: 20px; /* 减小间隙 */
+            margin-top: 40px; /* 减小上边距 */
         }
         
         .member-card {
             background: rgba(30, 30, 46, 0.6);
-            border-radius: 20px;
+            border-radius: 15px; /* 减小圆角 */
             overflow: hidden;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(57, 197, 187, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* 减小阴影 */
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* 确保卡片高度统一 */
         }
         
         .member-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(57, 197, 187, 0.3);
+            transform: translateY(-5px); /* 减小悬停移动距离 */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(57, 197, 187, 0.3);
             border-color: var(--primary);
         }
         
         .member-header {
-            height: 180px;
+            height: 140px; /* 固定高度 */
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2); /* 添加背景色以防图片加载慢 */
         }
         
-        .member-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(57, 197, 187, 0.3), rgba(232, 62, 140, 0.2));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .member-card:hover .member-header::before {
-            opacity: 1;
-        }
-        
+        /* 修改图片样式以保持比例 */
         .member-header img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* 保持原始比例，不裁剪 */
             transition: transform 0.5s ease;
         }
         
         .member-card:hover .member-header img {
-            transform: scale(1.1);
+            transform: scale(1.05); /* 轻微放大效果 */
         }
         
         .member-info {
-            padding: 20px;
+            padding: 15px; /* 减小内边距 */
             text-align: center;
+            flex-grow: 1; /* 让信息区域填充剩余空间 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .member-info h3 {
-            font-size: 1.4rem;
+            font-size: 1.1rem; /* 减小字号 */
             margin-bottom: 5px;
             color: var(--primary);
         }
         
         .member-info .role {
             color: var(--accent);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-weight: 500;
+            font-size: 0.9rem; /* 减小字号 */
+        }
+        
+        .member-info p {
+            font-size: 0.85rem; /* 减小字号 */
+            line-height: 1.4;
+            margin-bottom: 5px;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 1400px) {
+            .team-grid {
+                grid-template-columns: repeat(5, 1fr); /* 中等屏幕显示5个 */
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .team-grid {
+                grid-template-columns: repeat(4, 1fr); /* 较小屏幕显示4个 */
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .team-grid {
+                grid-template-columns: repeat(3, 1fr); /* 平板显示3个 */
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr); /* 手机显示2个 */
+                gap: 15px;
+            }
+            
+            .member-header {
+                height: 120px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .team-grid {
+                grid-template-columns: 1fr; /* 小手机显示1个 */
+            }
         }
         
         /* 资讯墙 */
@@ -764,6 +805,7 @@
             width: 40px;
             height: 2px;
             background: var(--accent);
+            transition: width 0.3s ease;
         }
         
         .footer-links {
@@ -772,6 +814,7 @@
         
         .footer-links li {
             margin-bottom: 10px;
+            transition: all 0.3s ease;
         }
         
         .footer-links a {
@@ -902,12 +945,13 @@
                     <div class="logo-text">郑州·大上海城二次元交流群</div>
                 </div>
                 <div class="nav-links">
-                    <a href="#about" class="active">社群介绍</a>
+                    <a href="#about">社群介绍</a>
                     <a href="#join">加入方式</a>
                     <a href="#rules">规则公告</a>
                     <a href="#team">管理团队</a>
                     <a href="#news">动态资讯</a>
-                    <a href="#events">活动日历</a>
+                    <a href="#resources">资源分享</a>
+                    <a href="community.html">社区</a>
                 </div>
             </nav>
         </div>
@@ -967,8 +1011,8 @@
                         <i class="fab fa-qq"></i>
                     </div>
                     <h3>QQ群加入</h3>
-                    <p>1群：976753783</p>
-                    <p>2群：1003941132</p>
+                    <p><a href="https://qm.qq.com/q/dZFmphFNiU"> ①群：976753783</a></p>
+                    <p><a href="https://qm.qq.com/q/wkC76KJxkI"> ②群：1003941132</a></p>
                     <p>搜索群号申请加入，快速审核加入</p>
                 </div>
                 <div class="method-card">
@@ -1097,6 +1141,7 @@
                         <h3>cn子霖</h3>
                         <div class="role">高级管理员</div>
                         <p>内向腼腆小男孩~</p>
+                        <p>太子殿下最忠诚的信徒</p>
                     </div>
                 </div>
                 <div class="member-card">
@@ -1117,7 +1162,7 @@
                         <h3>cn烤冷面</h3>
                         <div class="role">高级管理员</div>
                         <p>一位芝士火鸡烤冷面梦女</p>
-                        <p>“还有我想吃烤冷面了” ——琥夏</p>
+                        <p>"还有我想吃烤冷面了" ——琥夏</p>
                     </div>
                 </div>
                 <div class="member-card">
@@ -1127,8 +1172,8 @@
                     <div class="member-info">
                         <h3>cnHana</h3>
                         <div class="role">高级管理员</div>
-                        <p>“传说这位老师是一个人形地图</p>
-                        <p>会摇着花手带你满城跑” ——琥夏</p>
+                        <p>"传说这位老师是一个人形地图</p>
+                        <p>会摇着花手带你满城跑" ——琥夏</p>
                     </div>
                 </div>
                 <div class="member-card">
@@ -1147,9 +1192,20 @@
                     </div>
                     <div class="member-info">
                         <h3>cn琥夏</h3>
-                        <div class="role">①群管理员 官网管理员</div>
-                        <p>是一个被流放蜀南的老师</p>
-                        <p>内向到没有跟任何人在线下见过面</p>
+                        <div class="role">官网管理员</div>
+                        <p>这是一位活泼的老师</p>
+                        <p>其实他的人设是高冷？</p>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-header">
+                        <img src="images/璃.jpg" alt="管理员">
+                    </div>
+                    <div class="member-info">
+                        <h3>cn璃</h3>
+                        <div class="role">①群管理员</div>
+                        <p>璃子是香香软软小蛋糕</p>
+                        <p>脾气很好超温柔超可爱！</p>
                     </div>
                 </div>
                 <div class="member-card">
@@ -1159,8 +1215,8 @@
                     <div class="member-info">
                         <h3>cn懒懒</h3>
                         <div class="role">①群管理员</div>
-                        <p>“很外向的老师” ——子霖</p>
-                        <p>“不是很熟” ——晚安</p>
+                        <p>"很外向的老师" ——子霖</p>
+                        <p>实则是有点内向哒~</p>
                     </div>
                 </div>
                 <div class="member-card">
@@ -1242,14 +1298,14 @@
                     <div class="news-content">
                         <h3>官网发布</h3>
                         <h4>发布：琥夏</h4>
-                        <p>一转眼，郑州·大上海城二次元交流群的一周年庆（7月底）竟然已经过去一个月啦！ 虽然这份周年礼物有点“拖更”，但管理团队精心准备的惊喜终于来啦——我们的官方网站正式上线了！衷心感谢各位老师这一年多来不离不弃的陪伴与支持！ 这份迟到的礼物，承载着我们满满的谢意，希望老师们喜欢！</p>
+                        <p>一转眼，郑州·大上海城二次元交流群的一周年庆（7月底）竟然已经过去一个月啦！ 虽然这份周年礼物有点"拖更"，但管理团队精心准备的惊喜终于来啦——我们的官方网站正式上线了！衷心感谢各位老师这一年多来不离不弃的陪伴与支持！ 这份迟到的礼物，承载着我们满满的谢意，希望老师们喜欢！</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 活动日历 -->
+    <!-- 活动日历 
     <section id="events" class="section">
         <div class="container">
             <h2 class="section-title">活动日历</h2>
@@ -1265,9 +1321,9 @@
                     <div class="calendar-day">三</div>
                     <div class="calendar-day">四</div>
                     <div class="calendar-day">五</div>
-                    <div class="calendar-day">六</div>
+                    <div class="calendar-day">六</div>-->
                     
-                    <!-- 日历占位 -->
+                    <!-- 日历占位 
                     <div class="calendar-cell"></div>
                     <div class="calendar-cell"></div>
                     <div class="calendar-cell"></div>
@@ -1329,7 +1385,7 @@
                     <div class="calendar-cell"></div>
                     <div class="calendar-cell"></div>
                     <div class="calendar-cell"></div>
-                    <div class="calendar-cell"></div>
+                    <div class="calendar-cell"></div>-->
                     <!--
                     <div class="calendar-cell">7</div>
                     <div class="calendar-cell">8</div>
@@ -1367,19 +1423,22 @@
         </div>
     </section>
 
-    <!-- 资源分享 
+    <!-- 资源分享 -->
     <section id="resources" class="section">
         <div class="container">
             <h2 class="section-title">资源分享</h2>
+            <h4>樱岛琥夏提醒您：资源分享功能测试中，并非最终效果</h4>
             <div class="resources-grid">
                 <div class="resource-card">
-                    <h3><i class="fas fa-paint-brush"></i> 游戏资源</h3>
+                    <h3><i class="fas fa-paint-brush"></i> 画师资源</h3>
                     <ul class="resource-links">
-                        <li><a href="#">免费笔刷下载 - 动漫风格专用</a></li>
+                        <li><a href="#">水印包自取下载</a></li>
                         <li><a href="#">人体结构参考图集</a></li>
                         <li><a href="#">色彩搭配指南</a></li>
                         <li><a href="#">线稿练习素材包</a></li>
                     </ul>
+                    <p>社区功能施工中ing...</p>
+                    <p>本区块内容暂未开放敬请期待</p>
                 </div>
                 <div class="resource-card">
                     <h3><i class="fas fa-camera"></i> Cosplay资源</h3>
@@ -1389,23 +1448,27 @@
                         <li><a href="#">假发造型技巧</a></li>
                         <li><a href="#">郑州地区摄影场地推荐</a></li>
                     </ul>
+                    <p>社区功能施工中ing...</p>
+                    <p>本区块内容暂未开放敬请期待</p>
                 </div>
                 <div class="resource-card">
-                    <h3><i class="fas fa-film"></i> 动漫推荐</h3>
+                    <h3><i class="fas fa-film"></i> 动漫专栏</h3>
                     <ul class="resource-links">
-                        <li><a href="#">十月新番导视</a></li>
+                        <li><a href="#">[置顶]活动预留窗口</a></li>
                         <li><a href="#">经典番剧补完计划</a></li>
                         <li><a href="#">冷门佳作推荐</a></li>
                         <li><a href="#">国创动画盘点</a></li>
                     </ul>
+                    <p>社区功能施工中ing...</p>
+                    <p>本区块内容暂未开放敬请期待</p>
                 </div>
                 <div class="resource-card">
                     <h3><i class="fas fa-download"></i> 实用工具</h3>
                     <ul class="resource-links">
-                        <li><a href="#">视频剪辑软件推荐</a></li>
-                        <li><a href="#">动漫字体下载</a></li>
-                        <li><a href="#">无损图片压缩工具</a></li>
-                        <li><a href="#">二维码生成工具</a></li>
+                        <li><a href="https://www.adobe.com/cn/wam/aeft.html">视频剪辑软件推荐</a></li>
+                        <li><a href="https://haowallpaper.com">动漫壁纸无损下载</a></li>
+                        <li><a href="downloads/vpn.apk">手机VPN工具</a></li>
+                        <li><a href="https://qm.qq.com/q/JoJwAgZcUE">广告位招租</a></li>
                     </ul>
                     <div class="copyright-note">
                         注：本站分享资源均来自网络，仅供学习交流使用，请在下载后24小时内删除
@@ -1413,58 +1476,7 @@
                 </div>
             </div>
         </div>
-    </section>-->
-
-    <!-- 社群风采 
-    <section id="gallery" class="section">
-        <div class="container">
-            <h2 class="section-title">成员风采</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=300" alt="Cosplay作品">
-                    <div class="gallery-overlay">
-                        <h3>初音未来 - 雪MIKU</h3>
-                        <p>摄影：镜音铃</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=300" alt="绘画作品">
-                    <div class="gallery-overlay">
-                        <h3>夏日祭典</h3>
-                        <p>作者：巡音流歌</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1511882150382-421056c89033?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=300" alt="模型作品">
-                    <div class="gallery-overlay">
-                        <h3>高达模型 - 完美强袭</h3>
-                        <p>制作：KAITO</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1501084817091-a4f3d1d19e07?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=300" alt="同人作品">
-                    <div class="gallery-overlay">
-                        <h3>刀剑神域 - 亚丝娜</h3>
-                        <p>作者：初音守护者</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=300" alt="摄影作品">
-                    <div class="gallery-overlay">
-                        <h3>秋日祭典</h3>
-                        <p>摄影：镜音连</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1579546929662-711aa81148cf?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&w=300" alt="设计作品">
-                    <div class="gallery-overlay">
-                        <h3>动漫海报设计</h3>
-                        <p>作者：MEIKO</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>-->
+    </section>
 
     <!-- 页脚 -->
     <footer>
@@ -1484,23 +1496,24 @@
                 <div class="footer-section">
                     <h3>快速链接</h3>
                     <ul class="footer-links">
+                        <li><a href="community.html"><i class="fas fa-chevron-right"></i> 社区</a></li>
                         <li><a href="#about"><i class="fas fa-chevron-right"></i> 社群介绍</a></li>
                         <li><a href="#join"><i class="fas fa-chevron-right"></i> 加入方式</a></li>
                         <li><a href="#rules"><i class="fas fa-chevron-right"></i> 群规公告</a></li>
                         <li><a href="#news"><i class="fas fa-chevron-right"></i> 最新动态</a></li>
-                        <li><a href="#events"><i class="fas fa-chevron-right"></i> 活动日历</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h3>联系方式</h3>
                     <ul class="footer-links">
                         <li><a href="https://mail.qq.com/"><i class="fas fa-envelope"></i> sakurajima.roka@gmail.com</a></li>
-                        <li><a href="https://im.qq.com/"><i class="fab fa-qq"></i> ①群：976753783</a></li>
-                        <li><a href="https://im.qq.com/"><i class="fab fa-qq"></i> ②群：1003941132</a></li>
+                        <li><a href="https://qm.qq.com/q/dZFmphFNiU"><i class="fab fa-qq"></i> ①群：976753783</a></li>
+                        <li><a href="https://qm.qq.com/q/wkC76KJxkI"><i class="fab fa-qq"></i> ②群：1003941132</a></li>
                         <li><a href="http://www.dshc.cn/"><i class="fas fa-map-marker-alt"></i> 郑州大上海城</a></li>
                     </ul>
                 </div>
             </div>
+            <div class="copyright">ver1.1 2025.8.20 | 樱岛琥夏 制作</div>
             <div class="copyright">
                 &copy; 2025 郑州大上海城二次元交流群
             </div>
@@ -1512,6 +1525,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('.nav-links a');
+            
+            // 移除所有导航链接的active类
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
             
             window.addEventListener('scroll', function() {
                 let current = '';
@@ -1527,24 +1545,28 @@
                 
                 navLinks.forEach(link => {
                     link.classList.remove('active');
-                    if (link.getAttribute('href').substring(1) === current) {
+                    // 只对锚点链接进行高亮处理，排除外部页面链接
+                    if (link.getAttribute('href').startsWith('#') && 
+                        link.getAttribute('href').substring(1) === current) {
                         link.classList.add('active');
                     }
                 });
             });
             
-            // 平滑滚动
+            // 平滑滚动（只对锚点链接有效）
             navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-                    
-                    window.scrollTo({
-                        top: targetSection.offsetTop - 80,
-                        behavior: 'smooth'
+                if (link.getAttribute('href').startsWith('#')) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetSection = document.querySelector(targetId);
+                        
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
                     });
-                });
+                }
             });
         });
     </script>
