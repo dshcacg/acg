@@ -556,6 +556,150 @@
             }
         }
     </style>
+    <style>
+        /* 搜索框动画 */
+        .search-box {
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus-within {
+            box-shadow: 0 5px 20px rgba(57, 197, 187, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .search-input {
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            background: rgba(30, 30, 46, 0.9);
+        }
+        
+        .search-button {
+            transition: all 0.3s ease;
+        }
+        
+        .search-button:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 帖子卡片动画 */
+        .post-card {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .post-card.hidden {
+            animation: fadeOut 0.4s ease forwards;
+        }
+        
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: scale(0.95);
+                height: 0;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+        }
+        
+        /* 搜索结果计数动画 */
+        .search-results-count {
+            text-align: center;
+            margin: 15px 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.4s ease;
+        }
+        
+        .search-results-count.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 无结果提示动画 */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            opacity: 0;
+            animation: fadeIn 0.6s ease 0.3s forwards;
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        /* 加载动画 */
+        .search-loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .search-loading .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 15px;
+            border: 3px solid rgba(57, 197, 187, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .search-results-count {
+            text-align: center;
+            margin: 15px 0 25px 0; /* 增加底部间距 */
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.4s ease;
+            padding: 10px;
+            background: rgba(57, 197, 187, 0.1);
+            border-radius: 10px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            margin: 0 0 30px 0; /* 确保有足够的底部间距 */
+            opacity: 0;
+            animation: fadeIn 0.6s ease 0.3s forwards;
+            background: rgba(232, 62, 140, 0.1);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent);
+        }
+    </style>
 </head>
 <body>
     <!-- 头部导航 -->
@@ -602,6 +746,12 @@
                     <i class="fas fa-info-circle"></i> 本社区仅限官方发布内容 | 群员可通过投稿到<a href="https://pd.qq.com/s/g2psrwhwg">频道</a>后由官方发布
                 </div>
                 
+                <div class="post-tag">
+                    <div class="post-author">
+                        <h4>排序方式：最新</h4>
+                    </div>
+                </div>
+
                 <div class="posts-container">
                     <!-- 活动帖子示例 
                     <div class="post-card" data-category="official,event">
@@ -721,6 +871,48 @@
                         </div>
                     </div>
                     -->
+
+                    <!-- 帖子0010 -->
+                    <div class="post-card" data-category="anime">
+                        <div class="post-header">
+                            <div class="post-avatar">
+                                <img src="images/琥夏.jpg" alt="琥夏">
+                            </div>
+                            <div>
+                                <div class="post-author">cn琥夏</div>
+                                <div class="post-date">SQ0010 2025年8月22日 · 动漫讨论</div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="post-title">《未来日记》</h3>
+                        
+                        <div class="post-tags">
+                            <span class="post-tag">番剧推荐</span>
+                            <span class="post-tag">病娇</span>
+                        </div>
+                        
+                        <div class="post-content">
+                            <p><strong>这不仅仅是一部生存游戏番，这是一场关于“爱”的极限实验。</strong></p>
+                            
+                            <p>如果你问我，哪部动漫的爱最让人窒息、最让人战栗，又最让人难以忘怀，我会毫不犹豫地告诉你——《未来日记》。</p>
+
+                            <p>它把一个孤僻少年天野雪辉，和一个仿佛为他而生的女孩我妻由乃，扔进了一场必须厮杀的神之游戏。12位参与者，12部能预知未来的日记，规则只有一个：活下去，杀掉别人。</p>
+
+                            <p>但《未来日记》的真正核心，早已超越了这些刺激的设定。</p>
+
+                            <p><strong>它用最冰冷的刀锋，探讨了最滚烫的话题：爱，究竟可以纯粹和疯狂到什么地步？</strong></p>
+
+                            <p>我妻由乃，这个名字本身就是“病娇”二字的定义。她的爱是暴烈的、绝对的、不容置疑的。她可以为你清除一切障碍，也可以为你毁灭整个世界。你看的时候会害怕，会惊呼“这太过了！”，但内心深处，又会被这种扭曲到极致的纯粹所震撼。这不是普通的恋爱故事，这是一种灵魂级的绑定与献祭。</p>
+
+                            <p>当年追它的时候，我的心情完全被剧情攥在手心。每一次日记的更新都让人心跳漏拍，每一次由乃的微笑都让人脊背发凉，每一次的反转都让人目瞪口呆。它不会给你喘息的机会，它会把你拖进那个绝望又迷人的漩涡里，让你一边害怕，一边又忍不住想知道结局。</p>
+
+                            <p>所以，别看它披着黑暗、血腥的外衣，它的内核其实异常深刻。它逼着我们去看爱的另一个模样，那种不顾一切、冲破所有道德枷锁的原始形态。</p>
+
+                            <p>如果你准备好了，就请打开这部番。相信我，<strong>雪辉和由乃的故事，以及那句“ゆっくり死んでいってね（请你慢慢地死去吧）”，将会在你脑海里盘旋很久，很久。</strong></p>
+
+                            <p>这绝对是一场后劲十足，让你永生难忘的体验。</p>
+                        </div>
+                    </div>
 
                     <!-- 帖子0009 -->
                     <div class="post-card" data-category="bagua">
@@ -875,7 +1067,7 @@
                         
                             <p>这一首小诗是十年前给四谎的献礼。</p>
 
-                            <p>这时我的入坑作，当年我彻夜未眠将其看完，灵魂仿佛被钉在琴键与弓弦交织的四月里，回顾15遍左右，每次都有不同的感受。</p>
+                            <p>这是我的入坑作，当年我彻夜未眠将其看完，灵魂仿佛被钉在琴键与弓弦交织的四月里，回顾15遍左右，每次都有不同的感受。</p>
 
                             <P>四谎会用精美绝伦的画面、浪漫隽永的氛围、流淌灵魂的古典乐的乐章、悸动心弦的青春情愫，把你留在这个四月。</P>
 
@@ -1069,68 +1261,155 @@
     </footer>
 
     <script>
-        // 搜索功能实现
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.querySelector('.search-input');
             const searchButton = document.querySelector('.search-button');
             const postCards = document.querySelectorAll('.post-card');
             const categoryItems = document.querySelectorAll('.category-item a');
+            const postsContainer = document.querySelector('.posts-container');
+            
+            // 创建搜索结果计数元素
+            const resultsCount = document.createElement('div');
+            resultsCount.className = 'search-results-count';
+            postsContainer.parentNode.insertBefore(resultsCount, postsContainer);
+            
+            // 创建加载指示器
+            const loadingIndicator = document.createElement('div');
+            loadingIndicator.className = 'search-loading';
+            loadingIndicator.innerHTML = '<div class="spinner"></div><p>搜索中...</p>';
+            postsContainer.parentNode.insertBefore(loadingIndicator, postsContainer);
+            loadingIndicator.style.display = 'none';
+            
+            // 创建无结果提示
+            const noResults = document.createElement('div');
+            noResults.className = 'no-results';
+            noResults.innerHTML = '<i class="fas fa-search"></i><h3>没有找到相关结果</h3><p>尝试使用其他关键词搜索</p>';
+            postsContainer.parentNode.insertBefore(noResults, postsContainer);
+            noResults.style.display = 'none';
             
             // 搜索功能
             function performSearch() {
                 const searchTerm = searchInput.value.toLowerCase().trim();
+                let visibleCount = 0;
                 
-                if (searchTerm === '') {
-                    // 如果搜索词为空，显示所有帖子
+                // 显示加载动画
+                loadingIndicator.style.display = 'block';
+                noResults.style.display = 'none';
+                resultsCount.style.display = 'none';
+                
+                // 使用setTimeout让浏览器有时间渲染加载动画
+                setTimeout(() => {
                     postCards.forEach(card => {
-                        card.style.display = 'block';
-                    });
-                    return;
-                }
-                
-                // 过滤帖子
-                postCards.forEach(card => {
-                    const title = card.querySelector('.post-title').textContent.toLowerCase();
-                    const content = card.querySelector('.post-content').textContent.toLowerCase();
-                    const author = card.querySelector('.post-author').textContent.toLowerCase();
-                    const tags = card.querySelector('.post-tags').textContent.toLowerCase();
-                    const date = card.querySelector('.post-date').textContent.toLowerCase();
+                        // 安全地获取元素内容
+                        const titleEl = card.querySelector('.post-title');
+                        const contentEl = card.querySelector('.post-content');
+                        const authorEl = card.querySelector('.post-author');
+                        const tagsEl = card.querySelector('.post-tags');
+                        const dateEl = card.querySelector('.post-date');
+                        
+                        const title = titleEl ? titleEl.textContent.toLowerCase() : '';
+                        const content = contentEl ? contentEl.textContent.toLowerCase() : '';
+                        const author = authorEl ? authorEl.textContent.toLowerCase() : '';
+                        const tags = tagsEl ? tagsEl.textContent.toLowerCase() : '';
+                        const date = dateEl ? dateEl.textContent.toLowerCase() : '';
 
-                    if (title.includes(searchTerm) || content.includes(searchTerm) || 
-                        author.includes(searchTerm) || tags.includes(searchTerm) || date.includes(searchTerm)) {
-                        card.style.display = 'block';
+                        if (searchTerm === '' || title.includes(searchTerm) || content.includes(searchTerm) || 
+                            author.includes(searchTerm) || tags.includes(searchTerm) || date.includes(searchTerm)) {
+                            // 显示匹配的卡片
+                            card.style.display = 'block';
+                            card.classList.remove('hidden');
+                            visibleCount++;
+                        } else {
+                            // 隐藏不匹配的卡片
+                            card.style.display = 'none';
+                            card.classList.add('hidden');
+                        }
+                    });
+                    
+                    // 更新搜索结果计数
+                    if (searchTerm !== '') {
+                        resultsCount.textContent = `找到 ${visibleCount} 个结果`;
+                        resultsCount.style.display = 'block';
+                        resultsCount.classList.add('show');
+                        
+                        // 显示无结果提示
+                        if (visibleCount === 0) {
+                            noResults.style.display = 'block';
+                        } else {
+                            noResults.style.display = 'none';
+                        }
                     } else {
-                        card.style.display = 'none';
+                        resultsCount.style.display = 'none';
+                        resultsCount.classList.remove('show');
+                        noResults.style.display = 'none';
                     }
-                });
+                    
+                    // 隐藏加载动画
+                    loadingIndicator.style.display = 'none';
+                }, 300); // 与CSS动画时间相匹配
             }
             
             // 分类过滤功能
             function filterByCategory(category) {
-                postCards.forEach(card => {
-                    if (category === 'all') {
-                        card.style.display = 'block';
-                    } else {
-                        const cardCategory = card.getAttribute('data-category');
-                        if (cardCategory && cardCategory.includes(category)) {
+                let visibleCount = 0;
+                
+                // 显示加载动画
+                loadingIndicator.style.display = 'block';
+                noResults.style.display = 'none';
+                resultsCount.style.display = 'none';
+                
+                setTimeout(() => {
+                    postCards.forEach(card => {
+                        if (category === 'all') {
                             card.style.display = 'block';
+                            card.classList.remove('hidden');
+                            visibleCount++;
                         } else {
-                            card.style.display = 'none';
+                            const cardCategory = card.getAttribute('data-category');
+                            if (cardCategory && cardCategory.includes(category)) {
+                                card.style.display = 'block';
+                                card.classList.remove('hidden');
+                                visibleCount++;
+                            } else {
+                                card.style.display = 'none';
+                                card.classList.add('hidden');
+                            }
                         }
-                    }
-                });
-                
-                // 更新UI状态
-                categoryItems.forEach(item => {
-                    if (item.getAttribute('data-category') === category) {
-                        item.parentElement.classList.add('active');
+                    });
+                    
+                    // 更新UI状态
+                    categoryItems.forEach(item => {
+                        if (item.getAttribute('data-category') === category) {
+                            item.parentElement.classList.add('active');
+                        } else {
+                            item.parentElement.classList.remove('active');
+                        }
+                    });
+                    
+                    // 更新搜索结果计数
+                    if (category !== 'all') {
+                        resultsCount.textContent = `找到 ${visibleCount} 个结果`;
+                        resultsCount.style.display = 'block';
+                        resultsCount.classList.add('show');
+                        
+                        // 显示无结果提示
+                        if (visibleCount === 0) {
+                            noResults.style.display = 'block';
+                        } else {
+                            noResults.style.display = 'none';
+                        }
                     } else {
-                        item.parentElement.classList.remove('active');
+                        resultsCount.style.display = 'none';
+                        resultsCount.classList.remove('show');
+                        noResults.style.display = 'none';
                     }
-                });
-                
-                // 清空搜索框
-                searchInput.value = '';
+                    
+                    // 清空搜索框
+                    searchInput.value = '';
+                    
+                    // 隐藏加载动画
+                    loadingIndicator.style.display = 'none';
+                }, 300);
             }
             
             // 添加搜索事件监听
@@ -1150,21 +1429,13 @@
                 });
             });
             
-            // 平滑滚动
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
+            // 初始加载时显示所有卡片
+            setTimeout(() => {
+                postCards.forEach(card => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
                 });
-            });
+            }, 100);
         });
     </script>
 </body>
