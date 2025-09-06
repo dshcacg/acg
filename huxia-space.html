@@ -2,8 +2,24 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>樱岛琥夏の自介条</title>
+    <!-- 手机端检测 + 横屏锁 -->
+    <meta name="viewport" content="width=1280, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script>
+    (function(){
+        var isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (!isMobile) return;
+        /* 如果是手机，把根字号设成与视口宽度成比例，整体等比缩放 */
+        function setScale(){
+            var baseW = 1280;               /* 设计稿宽度 */
+            var scale = window.innerWidth / baseW;
+            document.documentElement.style.fontSize = (scale * 100) + 'px';
+        }
+        setScale();
+        window.addEventListener('resize', setScale);
+        window.addEventListener('orientationchange', setScale);
+    })();
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -593,8 +609,44 @@
                 display: block;
             }
         }
-    </style>
-</head>
+        /* ========= 手机端横屏等比缩放 ========= */
+        @media (max-width: 900px) and (orientation: landscape) {
+        /* 统一用 rem 做单位，上面脚本已把 html 字号设成与视口比例 */
+        body {
+            width: 1280px;          /* 保持原画布宽度 */
+            height: 720px;          /* 保持原画布高度 */
+            transform-origin: 0 0;
+            overflow: hidden;
+        }
+        .art-canvas {
+            width: 1280px;
+            height: 720px;
+            transform: scale(1);    /* 由 html 字号统一缩放 */
+        }
+        /* 让气泡、装饰、导航全部用 rem 继承缩放 */
+        .bubble,
+        .decoration,
+        .nav-buttons,
+        .music-control {
+            font-size: 1rem;        /* 1rem = 100px 在 1280 宽时 */
+        }
+    }
+
+    /* 竖屏依旧给出旋转提示（沿用你已有的 .orientation-alert） */
+    @media (max-width: 900px) and (orientation: portrait) {
+        .orientation-alert {
+            display: flex !important;
+        }
+        .art-canvas,
+        .nav-buttons,
+        .music-control,
+        .hint {
+            display: none !important;
+        }
+    }
+
+        </style>
+    </head>
 <body>
     <!-- 横屏提示 -->
     <div class="orientation-alert">
@@ -904,4 +956,5 @@
         window.addEventListener('orientationchange', checkOrientation);
     </script>
 </body>
+
 </html>
