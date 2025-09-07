@@ -688,6 +688,25 @@
             }
         }
     </style>
+    <script>
+        // 设备检测和跳转逻辑
+        function detectOrientation() {
+            const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isPortrait = window.innerHeight > window.innerWidth;
+            
+            // 如果是移动设备且竖屏，跳转到竖屏版本
+            if (isMobile && isPortrait) {
+                window.location.href = 'huxia-space-vertical.html';
+            }
+        }
+        
+        // 初始检测
+        detectOrientation();
+        
+        // 监听屏幕方向变化
+        window.addEventListener('resize', detectOrientation);
+        window.addEventListener('orientationchange', detectOrientation);
+    </script>
 </head>
 <body>
     <!-- 横屏提示 -->
