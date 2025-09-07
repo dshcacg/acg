@@ -2,24 +2,28 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <!-- 手机端检测 + 横屏锁 -->
-    <meta name="viewport" content="width=1280, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script>
     (function(){
         var isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         if (!isMobile) return;
-        /* 如果是手机，把根字号设成与视口宽度成比例，整体等比缩放 */
-        function setScale(){
-            var baseW = 1280;               /* 设计稿宽度 */
-            var scale = window.innerWidth / baseW;
-            document.documentElement.style.fontSize = (scale * 100) + 'px';
+        
+        // 只在移动设备上执行缩放
+        function setScaleForLandscape() {
+            if (window.innerWidth > 900 || window.matchMedia("(orientation: landscape)").matches) {
+                var designWidth = 1280;
+                var scale = window.innerWidth / designWidth;
+                document.documentElement.style.fontSize = (scale * 100) + 'px';
+            }
         }
-        setScale();
-        window.addEventListener('resize', setScale);
-        window.addEventListener('orientationchange', setScale);
+        
+        setScaleForLandscape();
+        window.addEventListener('resize', setScaleForLandscape);
+        window.addEventListener('orientationchange', setScaleForLandscape);
     })();
     </script>
 
+    <title>&copy; 2025 | 琥夏の自介条</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -46,18 +50,25 @@
             background-size: cover;
             color: var(--text);
             line-height: 1.6;
-            overflow: hidden;
             min-height: 100vh;
             cursor: default;
             position: relative;
             touch-action: manipulation;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: auto;
         }
         
         .art-canvas {
             position: relative;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
+            width: 100%;
+            max-width: 1280px;
+            height: auto;
+            min-height: 720px;
+            margin: 0 auto;
         }
         
         /* 气泡对话框样式 */
@@ -272,6 +283,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            background: linear-gradient(45deg, #2a3b5f, #1e2a47);
         }
         
         .cn {
@@ -428,68 +440,6 @@
             transform-origin: left center;
         }
         
-        /* 响应式设计 */
-        @media (max-width: 1100px) {
-            .bubble {
-                width: 250px !important;
-            }
-            
-            #avatar-bubble {
-                width: 220px !important;
-                height: 220px !important;
-            }
-        }
-        
-        @media (max-width: 900px) {
-            .art-canvas {
-                overflow: auto;
-                padding: 20px;
-                height: auto;
-            }
-            
-            .bubble {
-                position: relative !important;
-                margin: 20px auto;
-                width: 90% !important;
-                height: auto !important;
-                top: auto !important;
-                left: auto !important;
-                right: auto !important;
-                bottom: auto !important;
-            }
-            
-            .connector {
-                display: none;
-            }
-            
-            .nav-buttons {
-                flex-direction: column;
-                align-items: center;
-                position: relative;
-                bottom: 10px;
-                left: 0;
-                transform: none;
-                margin-top: 20px;
-            }
-            
-            .nav-btn {
-                width: 220px;
-                justify-content: center;
-                margin-bottom: 10px;
-            }
-            
-            .avatar {
-                width: 100px;
-                height: 100px;
-                font-size: 50px;
-            }
-            
-            .music-control {
-                bottom: 10px;
-                right: 10px;
-            }
-        }
-        
         /* 操作提示 */
         .hint {
             position: fixed;
@@ -583,6 +533,112 @@
             }
         }
         
+        /* 响应式设计 */
+        @media (max-width: 1280px) {
+            .art-canvas {
+                transform: scale(0.9);
+                transform-origin: center top;
+            }
+        }
+        
+        @media (max-width: 1100px) {
+            .art-canvas {
+                transform: scale(0.8);
+            }
+            
+            .bubble {
+                width: 250px !important;
+            }
+            
+            #avatar-bubble {
+                width: 220px !important;
+                height: 220px !important;
+            }
+            
+            #anime-bubble {
+                width: 500px !important;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            body {
+                padding: 10px;
+                overflow: auto;
+                height: auto;
+            }
+            
+            .art-canvas {
+                transform: scale(1);
+                width: 100%;
+                height: auto;
+                position: relative;
+                min-height: unset;
+            }
+            
+            .bubble {
+                position: relative !important;
+                margin: 20px auto;
+                width: 90% !important;
+                height: auto !important;
+                top: auto !important;
+                left: auto !important;
+                right: auto !important;
+                bottom: auto !important;
+                animation: none !important;
+            }
+            
+            .bubble::after {
+                display: none;
+            }
+            
+            .connector {
+                display: none;
+            }
+            
+            .nav-buttons {
+                position: relative;
+                bottom: 0;
+                left: 0;
+                transform: none;
+                margin: 20px 0;
+                justify-content: center;
+            }
+            
+            .nav-btn {
+                width: 220px;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+            
+            .avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 50px;
+            }
+            
+            .music-control {
+                position: relative;
+                bottom: 0;
+                right: 0;
+                margin: 20px 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .music-status {
+                position: relative;
+                bottom: 0;
+                right: 0;
+                opacity: 1;
+            }
+            
+            .decoration {
+                display: none;
+            }
+        }
+        
         /* 横屏提示的响应式显示 */
         @media (max-width: 900px) and (orientation: portrait) {
             .orientation-alert {
@@ -606,47 +662,33 @@
             .nav-buttons,
             .music-control,
             .hint {
-                display: block;
+                display: flex;
+            }
+            
+            body {
+                overflow: hidden;
+            }
+            
+            .art-canvas {
+                transform: scale(0.7);
+                transform-origin: center center;
             }
         }
-        /* ========= 手机端横屏等比缩放 ========= */
-        @media (max-width: 900px) and (orientation: landscape) {
-        /* 统一用 rem 做单位，上面脚本已把 html 字号设成与视口比例 */
-        body {
-            width: 1280px;          /* 保持原画布宽度 */
-            height: 720px;          /* 保持原画布高度 */
-            transform-origin: 0 0;
-            overflow: hidden;
+        
+        /* 电脑端大屏幕优化 */
+        @media (min-width: 1600px) {
+            .art-canvas {
+                transform: scale(1.1);
+            }
         }
-        .art-canvas {
-            width: 1280px;
-            height: 720px;
-            transform: scale(1);    /* 由 html 字号统一缩放 */
+        
+        @media (min-width: 1920px) {
+            .art-canvas {
+                transform: scale(1.2);
+            }
         }
-        /* 让气泡、装饰、导航全部用 rem 继承缩放 */
-        .bubble,
-        .decoration,
-        .nav-buttons,
-        .music-control {
-            font-size: 1rem;        /* 1rem = 100px 在 1280 宽时 */
-        }
-    }
-
-    /* 竖屏依旧给出旋转提示（沿用你已有的 .orientation-alert） */
-    @media (max-width: 900px) and (orientation: portrait) {
-        .orientation-alert {
-            display: flex !important;
-        }
-        .art-canvas,
-        .nav-buttons,
-        .music-control,
-        .hint {
-            display: none !important;
-        }
-    }
-
-        </style>
-    </head>
+    </style>
+</head>
 <body>
     <!-- 横屏提示 -->
     <div class="orientation-alert">
@@ -720,7 +762,7 @@
         <div class="bubble" id="anime-bubble">
             <h3><i class="fas fa-tv"></i> 看过的番</h3>
             <div class="content">
-                《败犬女主太多了！》《更衣人偶坠入爱河》《青春猪头少年系列》《路人女主的养成方法》《新世纪福音战士》《少女乐队的呐喊》《彻夜之歌》《四月是你的谎言》《我的青春恋爱物语果然有问题》《无论何时我们的恋情都是10厘米》《Fate/stay naigt UBW》《卫宫家今天的饭》《夜樱家的大作战》《我想吃掉你的胰脏》《不时轻声地以俄语遮羞的邻座艾莉同学》《尼尔：自动人形Ver1.1a》《式守同学不止可爱而已》《熏香花朵凛然绽放》《不要欺负我,长瀞同学》《中二病也要谈恋爱！》《樱花庄的宠物女孩》
+                《败犬女主太多了！》《更衣人偶坠入爱河》《青春猪头少年系列》《路人女主的养成方法》《新世纪福音战士》《少女乐队的呐喊》《彻夜之歌》《四月是你的谎言》《我的青春恋爱物语果然有问题》《无论何时我们的恋情都是10厘米》《Fate/stay night UBW》《卫宫家今天的饭》《夜樱家的大作战》《我想吃掉你的胰脏》《不时轻声地以俄语遮羞的邻座艾莉同学》《尼尔：自动人形Ver1.1a》《式守同学不止可爱而已》《熏香花朵凛然绽放》《不要欺负我,长瀞同学》《中二病也要谈恋爱！》《樱花庄的宠物女孩》
             </div>
             <div class="tags">
                 <span class="tag">恋爱</span>
@@ -766,8 +808,11 @@
     
     <!-- 导航按钮 -->
     <div class="nav-buttons">
-        <a href="index.html#team" class="nav-btn">
+        <a href="https://dshcacg.fun" class="nav-btn">
             <i class="fas fa-home"></i>
+        </a>
+        <a href="https://dshcacg.fun#team" class="nav-btn">
+            <i class="fas fa-user"></i>
         </a>
     </div>
     
@@ -794,11 +839,9 @@
         
         // 初始化音乐状态
         function initMusic() {
-            // 检查是否已经有用户交互记录
             const musicState = localStorage.getItem('musicState');
             
             if (musicState === 'playing') {
-                // 如果之前是播放状态，尝试恢复播放
                 audio.play().then(() => {
                     isPlaying = true;
                     icon.classList.remove('fa-volume-up');
@@ -812,7 +855,6 @@
                     musicStatus.textContent = "音乐: 关闭";
                 });
             } else {
-                // 默认暂停状态
                 isPlaying = false;
                 audio.pause();
                 icon.classList.remove('fa-volume-mute');
@@ -826,7 +868,7 @@
         
         // 切换音乐播放状态
         toggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // 阻止事件冒泡
+            e.stopPropagation();
             
             if (isPlaying) {
                 audio.pause();
@@ -842,7 +884,6 @@
                     localStorage.setItem('musicState', 'playing');
                 }).catch(err => {
                     console.log('播放失败:', err);
-                    // 如果播放失败，保持原状态
                     return;
                 });
             }
@@ -851,10 +892,8 @@
         
         // 页面点击时尝试自动播放（仅一次）
         window.addEventListener('click', function autoPlay() {
-            // 移除这个监听器，确保只执行一次
             window.removeEventListener('click', autoPlay);
             
-            // 如果音乐当前没有播放，尝试播放
             if (!isPlaying) {
                 audio.play().then(() => {
                     isPlaying = true;
@@ -870,13 +909,11 @@
         
         // 添加一些随机微调，使页面更有画布感
         document.querySelectorAll('.bubble').forEach(bubble => {
-            // 为每个气泡添加轻微的随机旋转
-            const rotate = (Math.random() * 6) - 3; // -3deg 到 3deg
+            const rotate = (Math.random() * 6) - 3;
             bubble.style.setProperty('--rotate', `${rotate}deg`);
             
-            // 为浮动动画添加随机延迟和持续时间
             const delay = Math.random() * 2;
-            const duration = 6 + (Math.random() * 4); // 6-10秒
+            const duration = 6 + (Math.random() * 4);
             bubble.style.animationDelay = `${delay}s, ${delay * 0.5}s`;
             bubble.style.animationDuration = `${duration}s, ${duration / 2}s`;
         });
@@ -884,50 +921,39 @@
         // 气泡按下检测功能
         let activeBubble = null;
         
-        // 添加触摸和鼠标事件监听器
         document.querySelectorAll('.bubble').forEach(bubble => {
-            // 鼠标按下事件
             bubble.addEventListener('mousedown', function(e) {
                 activateBubble(this);
                 e.stopPropagation();
             });
             
-            // 触摸开始事件
             bubble.addEventListener('touchstart', function(e) {
                 activateBubble(this);
                 e.stopPropagation();
             }, { passive: true });
             
-            // 防止拖动时选择文本
             bubble.addEventListener('dragstart', function(e) {
                 e.preventDefault();
             });
         });
         
-        // 激活气泡函数
         function activateBubble(bubble) {
-            // 取消之前激活的气泡
             if (activeBubble) {
                 activeBubble.classList.remove('active');
             }
             
-            // 激活当前气泡
             bubble.classList.add('active');
             activeBubble = bubble;
         }
         
-        // 点击页面其他部分取消气泡激活状态
         document.addEventListener('mousedown', function(e) {
-            // 检查点击的是否是气泡
             if (!e.target.closest('.bubble') && activeBubble) {
                 activeBubble.classList.remove('active');
                 activeBubble = null;
             }
         });
         
-        // 触摸页面其他部分取消气泡激活状态
         document.addEventListener('touchstart', function(e) {
-            // 检查触摸的是否是气泡
             if (!e.target.closest('.bubble') && activeBubble) {
                 activeBubble.classList.remove('active');
                 activeBubble = null;
@@ -940,21 +966,17 @@
             const otherContent = document.querySelectorAll('.art-canvas, .nav-buttons, .music-control, .hint');
             
             if (window.innerWidth <= 900 && window.matchMedia("(orientation: portrait)").matches) {
-                // 竖屏模式，显示提示
                 orientationAlert.style.display = 'flex';
                 otherContent.forEach(el => el.style.display = 'none');
             } else {
-                // 横屏模式或大屏幕，隐藏提示
                 orientationAlert.style.display = 'none';
-                otherContent.forEach(el => el.style.display = 'block');
+                otherContent.forEach(el => el.style.display = 'flex');
             }
         }
         
-        // 初始检查和添加监听器
         checkOrientation();
         window.addEventListener('resize', checkOrientation);
         window.addEventListener('orientationchange', checkOrientation);
     </script>
 </body>
-
 </html>
