@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>六班班级大本营Beta - 移动版</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #4a6bff;
+            --secondary: #303f9f;
+            --dark: #12121e;
+            --light: #f8f9fa;
+            --accent: #ff5252;
+            --accent-light: #ff7675;
+            --text: #e0e0ff;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #0d0d15 0%, var(--secondary) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+        
+        /* 移动端头部样式 */
+        .mobile-header {
+            background: rgba(18, 18, 30, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(74, 107, 255, 0.2);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mobile-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .mobile-logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), #6c8eff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(74, 107, 255, 0.4);
+        }
+        
+        .mobile-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), #8fa4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 8px rgba(74, 107, 255, 0.3);
+        }
+        
+        .mobile-menu-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        /* 移动端导航菜单 */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 280px;
+            height: 100vh;
+            background: rgba(18, 18, 30, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 1100;
+            transition: all 0.4s ease;
+            padding: 80px 20px 20px;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.4);
+            overflow-y: auto;
+        }
+        
+        .mobile-nav.active {
+            right: 0;
+        }
+        
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .mobile-nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background: rgba(74, 107, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .mobile-nav-links a.active,
+        .mobile-nav-links a:hover {
+            background: rgba(74, 107, 255, 0.25);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--accent);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1050;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s;
+        }
+        
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Hero 区域 - 移动版 */
+        .mobile-hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mobile-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(74, 107, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(255, 82, 82, 0.1) 0%, transparent 40%);
+            z-index: -1;
+        }
+        
+        .mobile-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), #8fa4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(74, 107, 255, 0.3);
+        }
+        
+        .mobile-hero p {
+            font-size: 1.2rem;
+            max-width: 100%;
+            margin-bottom: 30px;
+            color: #c0c0ff;
+        }
+        
+        .mobile-cta-button {
+            display: inline-block;
+            padding: 14px 35px;
+            background: linear-gradient(45deg, var(--primary), #6c8eff);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(74, 107, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .mobile-cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .mobile-cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .mobile-cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 107, 255, 0.6), 0 0 12px rgba(255, 82, 82, 0.4);
+        }
+        
+        /* 分区样式 - 移动版 */
+        .mobile-section {
+            padding: 60px 20px;
+            position: relative;
+        }
+        
+        .mobile-section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .mobile-section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        /* 内容卡片样式 */
+        .mobile-card {
+            background: rgba(30, 30, 46, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(74, 107, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mobile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        /* 班级介绍 - 移动版 */
+        .mobile-about-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .mobile-about-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .mobile-about-text p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: #d0d0ff;
+        }
+        
+        .mobile-class-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .mobile-class-image img {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(74, 107, 255, 0.3);
+        }
+        
+        .mobile-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .mobile-stat-card {
+            text-align: center;
+            padding: 20px;
+            background: rgba(74, 107, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .mobile-stat-card i {
+            font-size: 35px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .mobile-stat-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .mobile-stat-card p {
+            color: #c0c0ff;
+            font-size: 0.9rem;
+        }
+        
+        /* 班级成员 - 移动版 */
+        .mobile-team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .mobile-member-card {
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(30, 30, 46, 0.6);
+            border: 1px solid rgba(74, 107, 255, 0.2);
+        }
+        
+        .mobile-member-header {
+            height: 160px;
+            position: relative;
+        }
+        
+        .mobile-member-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .mobile-member-info {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .mobile-member-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .mobile-member-info .role {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        
+        .mobile-member-info p {
+            font-size: 0.85rem;
+            color: #c0c0ff;
+        }
+        
+        /* 公告通知 - 移动版 */
+        .mobile-news-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .mobile-news-card {
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(30, 30, 46, 0.6);
+            border: 1px solid rgba(74, 107, 255, 0.2);
+        }
+        
+        .mobile-news-date {
+            padding: 10px 15px;
+            background: rgba(255, 82, 82, 0.2);
+            font-size: 0.85rem;
+            color: var(--accent-light);
+        }
+        
+        .mobile-news-content {
+            padding: 15px;
+        }
+        
+        .mobile-news-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        
+        .mobile-news-content p {
+            font-size: 0.95rem;
+            color: #c0c0ff;
+        }
+        
+        /* 资源分享 - 移动版 */
+        .mobile-resources-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .mobile-resource-card {
+            border-radius: 15px;
+            padding: 20px;
+            background: rgba(30, 30, 46, 0.6);
+            border: 1px solid rgba(74, 107, 255, 0.2);
+        }
+        
+        .mobile-resource-card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .mobile-resource-links {
+            list-style-type: none;
+        }
+        
+        .mobile-resource-links li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(74, 107, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mobile-resource-links li::before {
+            content: '•';
+            color: var(--primary);
+        }
+        
+        .mobile-resource-links li:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-resource-links a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .mobile-resource-links a:hover {
+            color: var(--accent-light);
+            text-decoration: underline;
+        }
+        
+        /* 页脚 - 移动版 */
+        .mobile-footer {
+            background: rgba(10, 10, 20, 0.95);
+            padding: 40px 20px 25px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(74, 107, 255, 0.2);
+        }
+        
+        .mobile-footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .mobile-footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .mobile-footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 35px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .mobile-footer-section p {
+            font-size: 0.95rem;
+        }
+        
+        .mobile-footer-links {
+            list-style-type: none;
+        }
+        
+        .mobile-footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .mobile-footer-links a {
+            color: #c0c0ff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .mobile-footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .mobile-social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .mobile-social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(74, 107, 255, 0.1);
+            color: var(--primary);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(74, 107, 255, 0.3);
+        }
+        
+        .mobile-social-links a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .mobile-copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(74, 107, 255, 0.1);
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+        
+        /* 返回顶部按钮 */
+        .mobile-back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(74, 107, 255, 0.4);
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 响应式调整 */
+        @media (min-width: 768px) {
+            .mobile-hero h1 {
+                font-size: 3rem;
+            }
+            
+            .mobile-team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            
+            .mobile-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 移动端头部导航 -->
+    <header class="mobile-header">
+        <div class="mobile-logo">
+            <div class="mobile-logo-img">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="mobile-logo-text">天府二中初2023级6班官网Beta</div>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- 移动端导航菜单 -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="mobile-nav-links">
+            <a href="#about" class="active">
+                <i class="fas fa-users"></i> 班级介绍
+            </a>
+            <a href="#members">
+                <i class="fas fa-user-friends"></i> 班级成员
+            </a>
+            <a href="#schedule">
+                <i class="fas fa-calendar-alt"></i> 课程表(制作中)
+            </a>
+            <a href="#gallery">
+                <i class="fas fa-images"></i> 班级相册(制作中)
+            </a>
+            <a href="#news">
+                <i class="fas fa-newspaper"></i> 公告通知
+            </a>
+            <a href="#resources">
+                <i class="fas fa-book"></i> 学习资源
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero 区域 - 移动版 -->
+    <section class="mobile-hero">
+        <h1>六班班级の大本营</h1>
+        <p>跟着雷哥混，三天饱九顿</p>
+        <a href="#about" class="mobile-cta-button">了解更多</a>
+    </section>
+
+    <!-- 班级介绍 - 移动版 -->
+    <section id="about" class="mobile-section">
+        <div class="container">
+            <h2 class="mobile-section-title">班级介绍</h2>
+            <div class="mobile-about-content">
+                <div class="mobile-about-text">
+                    <h3>我们的班级</h3>
+                    <p>我们是一个团结友爱、积极向上的班集体，由57名同学和9位辛勤的老师组成。自成立以来，我们始终秉持？？？的班训(ps:我们有班训吗？)，在学习和各项活动中取得了"优"异成绩。</p>
+                    <p>我们的班级氛围融洽，同学之间互帮互助，师生关系和谐。在这里，每个人都能找到属于自己的舞台，发挥自己的特长，共同创造一个温馨、向上的学习环境。</p>
+                    <p>无论是学习上的困难，还是生活中的挑战，我们都携手共进，共同成长。这就是我们的班级，一个充满活力和温暖的大家庭。</p>
+                </div>
+                <div class="mobile-class-image">
+                    <img src="" alt="班级合影(真的有吗？)">
+                </div>
+            </div>
+            
+            <div class="mobile-stats">
+                <div class="mobile-stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>57</h3>
+                    <p>班级成员</p>
+                </div>
+                <div class="mobile-stat-card">
+                    <i class="fas fa-trophy"></i>
+                    <h3>统计中</h3>
+                    <p>集体荣誉</p>
+                </div>
+                <div class="mobile-stat-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>2</h3>
+                    <p>学年历程</p>
+                </div>
+                <div class="mobile-stat-card">
+                    <i class="fas fa-book"></i>
+                    <h3>9</h3>
+                    <p>学科课程</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 班级成员 - 移动版 -->
+    <section id="members" class="mobile-section">
+        <div class="container">
+            <h2 class="mobile-section-title">辛勤の老师们</h2>
+            <div class="mobile-team-grid">
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/LeiGe.JPG" alt="班主任">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>雷哥</h3>
+                        <div class="role">班主任/历史老师</div>
+                        <p>用心教育，用爱陪伴，引领我们成长。</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/ChenLan.jpg" alt="英语老师">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>陈老师</h3>
+                        <div class="role">英语老师</div>
+                        <p>英语跟着陈姐走，A+不用愁！</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                        <img src="images/LiMao.jpg" alt="物理老师">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>李老师</h3>
+                        <div class="role">物理老师</div>
+                        <p>权威这一块</p>
+                    </div>
+                </div>
+                <div class="mobile-member-card">
+                    <div class="mobile-member-header">
+                    </div>
+                    <div class="mobile-member-info">
+                        <h3>更多正在制作中ing...</h3>
+                        <div class="role">广告位招租</div>
+                        <p>广告位招租,有意者练习1050989977</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 公告通知 - 移动版 -->
+    <section id="news" class="mobile-section">
+        <div class="container">
+            <h2 class="mobile-section-title">公告通知</h2>
+            <div class="mobile-news-grid">
+                <div class="mobile-news-card">
+                    <div class="mobile-news-date">2025年9月13日</div>
+                    <div class="mobile-news-content">
+                        <h3>9/13-9/14周末放假作业及通知</h3>
+                        <p>请前往<a href="https://qm.qq.com/q/qLxmcQBUhG">班群-群相册</a>查看</p>
+                    </div>
+                </div>
+                <div class="mobile-news-card">
+                    <div class="mobile-news-date">2025年9月6日</div>
+                    <div class="mobile-news-content">
+                        <h3>9/6-9/7周末放假作业及通知</h3>
+                        <p>请前往<a href="https://qm.qq.com/q/qLxmcQBUhG">班群-群相册</a>查看</p>
+                    </div>
+                </div>
+                <div class="mobile-news-card">
+                    <div class="mobile-news-date">2025年8月31日</div>
+                    <div class="mobile-news-content">
+                        <h3>摸底考试通知</h3>
+                        <p>本年级将于9月2日进行开学摸底考试，考试科目为：语文数学英语物理，请同学们复习这些科目以应对考试。</p>
+                    </div>
+                </div>
+                <div class="mobile-news-card">
+                    <div class="mobile-news-date">2025年8月28日</div>
+                    <div class="mobile-news-content">
+                        <h3>教室布置召集</h3>
+                        <p>开学在即，需要几位离学校比较近的志愿者明天上午到学校帮忙布置教室，请大家踊跃报名哈。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 资源分享 - 移动版 -->
+    <section id="resources" class="mobile-section">
+        <div class="container">
+            <h2 class="mobile-section-title">学习资源</h2>
+            <div class="mobile-resources-grid">
+                <div class="mobile-resource-card">
+                    <h3><i class="fas fa-book"></i> 学习资料</h3>
+                    <ul class="mobile-resource-links">
+                        <li><a href="#">收集中ing...</a></li>
+                        <li><a href="#">收集中ing...</a></li>
+                        <li><a href="#">收集中ing...</a></li>
+                        <li><a href="#">收集中ing...</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-resource-card">
+                    <h3><i class="fas fa-file-pdf"></i> 复习试题</h3>
+                    <ul class="mobile-resource-links">
+                        <li><a href="#">收集中ing...</a></li>
+                        <li><a href="#">收集中ing...</a></li>
+                        <li><a href="#">收集中ing...</a></li>
+                        <li><a href="#">收集中ing...</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-resource-card">
+                    <h3><i class="fas fa-link"></i> 有用链接</h3>
+                    <ul class="mobile-resource-links">
+                        <li><a href="https://basic.smartedu.cn/">国家中小学网络云平台</a></li>
+                        <li><a href="http://www.lzljtfzx.cn/">泸州老窖天府中学官网</a></li>
+                        <li><a href="https://gaj.luzhou.gov.cn/">泸州市公安局</a></li>
+                        <li><a href="https://jyj.luzhou.gov.cn/">泸州市教育和体育局</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 - 移动版 -->
+    <footer class="mobile-footer">
+        <div class="container">
+            <div class="mobile-footer-content">
+                <div class="mobile-footer-section">
+                    <h3>关于我们</h3>
+                    <p>6班是一个团结友爱、积极向上的集体，我们在这里学习、成长、追逐梦想。</p>
+                    <div class="mobile-social-links">
+                        <a href="https://qm.qq.com/q/qLxmcQBUhG"><i class="fab fa-qq"></i></a>
+                    </div>
+                </div>
+                <div class="mobile-footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="mobile-footer-links">
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> 班级介绍</a></li>
+                        <li><a href="#members"><i class="fas fa-chevron-right"></i> 班级教师</a></li>
+                        <li><a href="#schedule"><i class="fas fa-chevron-right"></i> 课程表(制作中)</a></li>
+                        <li><a href="#gallery"><i class="fas fa-chevron-right"></i> 班级相册(制作中)</a></li>
+                        <li><a href="#news"><i class="fas fa-chevron-right"></i> 公告通知</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-footer-section">
+                    <h3>联系方式</h3>
+                    <ul class="mobile-footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 嘉澍楼G605教室</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> 班主任: 18111181920</a></li>
+                        <li><a href="#"><i class="fab fa-qq"></i> 班级Q群：618407844</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mobile-copyright">
+                &copy; 2023-2026 泸州老窖天府中学初2023级6班
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <div class="mobile-back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 移动端导航菜单功能
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+        const navLinks = document.querySelectorAll('.mobile-nav-links a');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+            mobileOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        mobileNavClose.addEventListener('click', () => {
+            closeMobileNav();
+        });
+        
+        mobileOverlay.addEventListener('click', () => {
+            closeMobileNav();
+        });
+        
+        function closeMobileNav() {
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // 导航高亮功能
+        function setActiveLink() {
+            const sections = document.querySelectorAll('.mobile-section');
+            let currentSectionId = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                
+                if (window.scrollY >= (sectionTop - 100) && window.scrollY < (sectionTop + sectionHeight - 100)) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').startsWith('#') && 
+                    link.getAttribute('href').substring(1) === currentSectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        // 初始化高亮
+        window.addEventListener('load', setActiveLink);
+        window.addEventListener('scroll', setActiveLink);
+        
+        // 平滑滚动
+        navLinks.forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    closeMobileNav();
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 返回顶部按钮
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
